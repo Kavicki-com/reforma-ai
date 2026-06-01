@@ -104,7 +104,7 @@ export default function Dashboard() {
   const t = totals || {}
   const budget = Number(t.budget_total || 0)
   const spent = Number(t.total_spent || 0)        // pago + materiais comprados
-  const committed = Number(t.total_expense || 0)  // total lançado em gastos
+  const toPay = Number(t.total_pending || 0) + Number(t.estimated_to_buy || 0) // custos a pagar + materiais a comprar
   const overBudget = budget > 0 && spent > budget
   const donutPct = stageStats.total ? Math.round((stageStats.done / stageStats.total) * 100) : 0
 
@@ -157,13 +157,13 @@ export default function Dashboard() {
           <span className={styles.statLabel}>Etapas concluídas</span>
           <span className={styles.statHint}>{stageStats.done} de {stageStats.total}</span>
         </div>
-        <Stat label="Total lançado" value={money(committed)} hint="pago + a pagar" />
-        <Stat label="Gasto estimado" value={money(t.estimated_total)} hint="lançado + a comprar" />
+        <Stat label="Gasto estimado" value={money(t.estimated_total)} hint="pago + a pagar" />
         <Stat
           label="Saldo do orçamento"
           value={money(t.remaining)}
           tone={Number(t.remaining) < 0 ? 'pending' : 'paid'}
         />
+        <Stat label="A pagar" value={money(toPay)} hint="custos + materiais a comprar" tone="pending" />
       </div>
 
       {/* Duracao (derivada das etapas) */}

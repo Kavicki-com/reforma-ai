@@ -3,6 +3,7 @@ import { supabase } from '../lib/supabase'
 import { useAuth } from '../auth/AuthProvider'
 import { useProject } from '../lib/useProject'
 import { dateBR } from '../lib/format'
+import { compressImage } from '../lib/image'
 import Spinner from '../components/Spinner'
 import Icon from '../components/Icon'
 import styles from './Photos.module.css'
@@ -68,8 +69,9 @@ export default function Photos() {
     setUploading(true)
     try {
       for (const file of files) {
-        const path = `${project.id}/${crypto.randomUUID()}-${file.name}`
-        const up = await supabase.storage.from('fotos').upload(path, file)
+        const img = await compressImage(file)
+        const path = `${project.id}/${crypto.randomUUID()}-${img.name}`
+        const up = await supabase.storage.from('fotos').upload(path, img)
         if (up.error) throw up.error
         await supabase.from('photos').insert({
           project_id: project.id,
