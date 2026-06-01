@@ -1,0 +1,8 @@
+.budgetHead { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); }
+.big { display: block; font-size: 1.6rem; }
+.legend { display: flex; justify-content: space-between; font-size: .9rem; }
+.over { color: var(--danger); font-weight: 600; }
+.estimate { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); padding-top: var(--sp-3); }
+.subtitle { font-size: 1.1rem; margin: var(--sp-5) 0 var(--sp-3); }
+.catHead { display: flex; justify-content: space-between; margin-bottom: var(--sp-2); }
+.pending { display: block; margin-top: var(--sp-2); font-size: .8rem; color: var(--warning); }

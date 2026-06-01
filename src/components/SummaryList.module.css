@@ -1,0 +1,14 @@
+.lineHead { display: flex; justify-content: space-between; align-items: baseline; gap: var(--sp-2); margin-bottom: 4px; font-size: .9rem; }
+.row { display: flex; align-items: center; gap: var(--sp-2); font-size: .9rem; }
+.row span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.todo { color: var(--text-muted); }
+.done { color: var(--success); }
+.struck { text-decoration: line-through; color: var(--text-muted); }
+.tag { font-style: normal; font-size: .72rem; color: var(--text-muted); }
+.sub { font-size: .78rem; color: var(--text-muted); }
+.more {
+  display: inline-block;
+  margin-top: var(--sp-2);
+  font-weight: 600;
+  font-size: .9rem;
+}

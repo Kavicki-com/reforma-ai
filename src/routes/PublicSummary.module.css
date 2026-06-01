@@ -1,0 +1,60 @@
+.header { text-align: center; margin-bottom: var(--sp-5); }
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  color: var(--primary);
+  font-family: var(--font-title);
+  font-weight: 600;
+  margin-bottom: var(--sp-3);
+}
+.header h1 { font-size: 1.6rem; }
+
+.progressCard { margin-bottom: var(--sp-4); }
+.progressHead { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--sp-2); }
+.progressPct { font-family: var(--font-title); font-size: 1.4rem; color: var(--primary); }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+.stat { display: flex; flex-direction: column; gap: 4px; }
+.statLabel { font-size: .78rem; color: var(--text-muted); font-weight: 600; }
+.statValue { font-family: var(--font-title); font-size: 1.2rem; }
+.paid { color: var(--success); }
+.pending { color: var(--warning); }
+
+.duration {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+.durationValue { font-family: var(--font-title); display: block; font-size: 1.3rem; margin-top: 2px; }
+.dates { display: flex; flex-direction: column; text-align: right; font-size: .8rem; color: var(--text-muted); gap: 2px; }
+
+.section { font-size: 1.1rem; margin: var(--sp-5) 0 var(--sp-3); }
+
+.stageGrid { display: grid; grid-template-columns: 1fr; gap: var(--sp-3); }
+.stageCard { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.stageName { font-size: 1rem; }
+.sub { font-size: .8rem; color: var(--text-muted); }
+
+.catRow { display: flex; justify-content: space-between; }
+
+.materials { display: flex; justify-content: space-between; gap: var(--sp-3); text-align: center; }
+.materials div { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.materials strong { font-family: var(--font-title); font-size: 1.2rem; }
+
+.footer { text-align: center; color: var(--text-muted); font-size: .8rem; margin-top: var(--sp-6); }
+
+@media (min-width: 768px) {
+  .grid { grid-template-columns: repeat(4, 1fr); }
+  .stageGrid { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 1024px) {
+  .stageGrid { grid-template-columns: repeat(4, 1fr); }
+}

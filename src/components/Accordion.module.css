@@ -1,0 +1,23 @@
+.acc { padding: 0; overflow: hidden; }
+.head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  width: 100%;
+  background: none;
+  border: none;
+  padding: var(--sp-4);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text);
+  text-align: left;
+}
+.icon { color: var(--primary); font-size: 22px; }
+.title { flex: 1; }
+.chevron { color: var(--text-muted); }
+.body {
+  padding: 0 var(--sp-4) var(--sp-4);
+  border-top: 1px solid var(--border);
+  padding-top: var(--sp-3);
+}

@@ -1,0 +1,22 @@
+.form { margin-bottom: var(--sp-4); }
+.head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp-2); margin-bottom: 4px; }
+.titleBlock { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.actions { display: flex; gap: var(--sp-3); white-space: nowrap; }
+.link { background: none; border: none; color: var(--primary); font-weight: 600; padding: 0; }
+.linkDanger { background: none; border: none; color: var(--danger); font-weight: 600; padding: 0; }
+.dates { font-size: .82rem; color: var(--text-muted); margin-bottom: var(--sp-2); }
+.money { display: flex; justify-content: space-between; margin-top: var(--sp-2); font-size: .9rem; }
+.completeBtn { margin-top: var(--sp-3); }
+.doneTag { color: var(--success); }
+
+/* Grid de cards de etapa */
+.grid { display: grid; grid-template-columns: 1fr; gap: var(--sp-3); }
+.stageCard { display: flex; flex-direction: column; }
+.stageCard .completeBtn { margin-top: auto; padding-top: 0; }
+
+@media (min-width: 640px) {
+  .grid { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 1024px) {
+  .grid { grid-template-columns: repeat(4, 1fr); }
+}

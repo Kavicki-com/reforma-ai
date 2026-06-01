@@ -1,0 +1,58 @@
+.attachList { display: flex; flex-direction: column; gap: var(--sp-2); margin-bottom: var(--sp-2); }
+.attach {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+}
+.attachName { display: inline-flex; align-items: center; gap: 6px; background: none; border: none; color: var(--primary); font-weight: 600; text-align: left; padding: 0; }
+.attachDel { display: inline-flex; align-items: center; background: none; border: none; color: var(--danger); padding: 0 4px; }
+
+.fileBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  color: var(--primary);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.error {
+  color: var(--danger);
+  background: var(--danger-soft);
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-size: .9rem;
+}
+
+/* Botão de IA (ler nota fiscal) */
+.aiBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 16px;
+  border: 1px solid var(--info);
+  border-radius: var(--radius-sm);
+  background: var(--info-soft);
+  color: var(--info);
+  font-weight: 600;
+}
+.aiBtn:disabled { opacity: .7; }
+
+.aiItems {
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: .85rem;
+}
+.aiItems ul { margin: 6px 0 0; padding-left: 18px; color: var(--text); }
+.aiItems li { margin-bottom: 2px; }

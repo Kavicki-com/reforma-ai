@@ -1,0 +1,8 @@
+.donut { display: block; }
+.value { transition: stroke-dashoffset .5s ease; }
+.label {
+  font-family: var(--font-title);
+  font-weight: 600;
+  font-size: 19px;
+  fill: var(--text);
+}

@@ -1,0 +1,119 @@
+.title h1 { font-size: 1.5rem; }
+.title .muted { font-size: .85rem; margin-top: 2px; }
+
+/* Topbar com menu hamburguer */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-4);
+}
+.greeting { flex: 1; min-width: 0; }
+.shareRow { display: flex; gap: var(--sp-2); }
+.shareRow .input { flex: 1; min-width: 0; }
+.shareRow .btn { flex-shrink: 0; }
+.iconBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: var(--text);
+}
+.iconBtn:active { background: var(--surface-2); }
+.menuBtn { margin-left: -8px; }
+
+/* Card do donut (etapas concluidas) */
+.donutCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  text-align: center;
+}
+.donutCard .statHint { font-size: .72rem; }
+
+/* Hero */
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-4);
+}
+.heroLabel { font-size: .85rem; color: var(--text-muted); }
+.heroValue { font-family: var(--font-title); font-size: 2.2rem; line-height: 1.1; }
+.heroSub { font-size: .8rem; color: var(--text-muted); }
+
+/* Grade de indicadores */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.statLabel { font-size: .78rem; color: var(--text-muted); font-weight: 600; }
+.statValue { font-family: var(--font-title); font-size: 1.25rem; line-height: 1.2; }
+.statHint { font-size: .7rem; color: var(--text-muted); }
+.paid { color: var(--success); }
+.pending { color: var(--warning); }
+
+/* Duracao */
+.duration {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-5);
+}
+.durationValue { font-family: var(--font-title); display: block; font-size: 1.3rem; margin-top: 2px; }
+.dates {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  font-size: .8rem;
+  color: var(--text-muted);
+  gap: 2px;
+}
+
+/* Atalhos */
+.links { display: flex; flex-direction: column; gap: var(--sp-3); }
+
+/* Barra de progresso geral */
+.progressCard { margin-bottom: var(--sp-4); }
+.progressHead { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--sp-2); }
+.progressPct { font-family: var(--font-title); font-size: 1.4rem; color: var(--primary); }
+
+/* Acordeões */
+.accordions { display: flex; flex-direction: column; gap: var(--sp-3); }
+
+/* ===== Responsivo ===== */
+@media (min-width: 768px) {
+  .grid { grid-template-columns: repeat(4, 1fr); }
+  .heroValue { font-size: 2.6rem; }
+}
+@media (min-width: 1024px) {
+  .menuBtn { display: none; }
+  .accordions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    align-items: start;
+  }
+}
+.link {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-weight: 600;
+  color: var(--text);
+}
+.linkIcon { color: var(--primary); font-size: 22px; }
+.chevron { margin-left: auto; color: var(--text-muted); font-size: 22px; }
