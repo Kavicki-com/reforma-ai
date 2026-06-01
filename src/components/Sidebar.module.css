@@ -25,6 +25,7 @@
     font-size: 1.3rem;
     color: var(--primary);
   }
+  .brandLogo { width: 32px; height: 32px; border-radius: 8px; object-fit: cover; }
   .user { display: block; margin-top: 6px; font-size: .85rem; color: var(--text-muted); }
 
   .nav { display: flex; flex-direction: column; gap: 2px; }
@@ -41,16 +42,33 @@
   .active { background: var(--primary-soft); color: var(--primary); }
   .active:hover { background: var(--primary-soft); }
 
+  .footer { margin-top: auto; display: flex; flex-direction: column; gap: var(--sp-2); }
+  .install {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    padding: 12px var(--sp-3);
+    border: 1px solid var(--info);
+    border-radius: var(--radius-sm);
+    background: var(--info-soft);
+    color: var(--info);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
   .signout {
     display: flex;
     align-items: center;
     gap: var(--sp-3);
-    margin-top: auto;
     padding: 12px var(--sp-3);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     background: var(--surface);
     color: var(--danger);
+    font-family: var(--font-body);
+    font-size: 1rem;
     font-weight: 600;
+    cursor: pointer;
   }
 }

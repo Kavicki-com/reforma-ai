@@ -12,14 +12,11 @@
 .brand { text-align: center; }
 .brand h1 { font-size: 1.9rem; margin-top: var(--sp-3); }
 .logo {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 76px;
-  height: 76px;
+  width: 84px;
+  height: 84px;
   border-radius: 22px;
-  background: var(--primary-soft);
-  color: var(--primary);
+  object-fit: cover;
+  box-shadow: var(--shadow);
 }
 .card { display: block; }
 .error {

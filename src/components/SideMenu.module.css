@@ -33,6 +33,7 @@
   font-size: 1.25rem;
   color: var(--primary);
 }
+.brandLogo { width: 30px; height: 30px; border-radius: 8px; object-fit: cover; }
 .user { display: block; margin-top: 4px; font-size: .85rem; color: var(--text-muted); }
 
 .nav { display: flex; flex-direction: column; gap: 2px; }
@@ -40,10 +41,17 @@
   display: flex;
   align-items: center;
   gap: var(--sp-3);
+  width: 100%;
   padding: 12px var(--sp-3);
+  border: none;
   border-radius: var(--radius-sm);
+  background: none;
   color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
   font-weight: 600;
+  text-align: left;
+  cursor: pointer;
 }
 .link:active { background: var(--surface-2); }
 .active { background: var(--primary-soft); color: var(--primary); }

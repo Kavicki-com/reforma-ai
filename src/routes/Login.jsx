@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/AuthProvider'
 import Spinner from '../components/Spinner'
-import Icon from '../components/Icon'
+import CompanyFooter from '../components/CompanyFooter'
 import styles from './Login.module.css'
+
+const logo = `${import.meta.env.BASE_URL}pwa-192.png`
 
 export default function Login() {
   const { session, signIn } = useAuth()
@@ -33,9 +35,9 @@ export default function Login() {
   return (
     <div className={styles.wrap}>
       <div className={styles.brand}>
-        <span className={styles.logo}><Icon name="home_repair_service" size={40} fill={1} /></span>
-        <h1>Reforma AI</h1>
-        <p className="muted">Gestão da obra do apartamento</p>
+        <img className={styles.logo} src={logo} alt="Krovo" />
+        <h1>Krovo</h1>
+        <p className="muted">Sua obra na mão</p>
       </div>
 
       <form className={`card ${styles.card}`} onSubmit={onSubmit}>
@@ -66,6 +68,7 @@ export default function Login() {
           {busy ? <Spinner small /> : 'Entrar'}
         </button>
       </form>
+      <CompanyFooter />
     </div>
   )
 }

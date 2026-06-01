@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import { useInstallPrompt } from '../lib/useInstallPrompt'
 import { money, dateBR } from '../lib/format'
 import ProgressBar from '../components/ProgressBar'
 import Spinner from '../components/Spinner'
 import Icon from '../components/Icon'
+import CompanyFooter from '../components/CompanyFooter'
 import styles from './PublicSummary.module.css'
+
+const logo = `${import.meta.env.BASE_URL}pwa-192.png`
 
 const STATUS = {
   pendente: { label: 'Pendente', cls: 'badge-pending' },
@@ -17,6 +21,7 @@ export default function PublicSummary() {
   const { token } = useParams()
   const [data, setData] = useState(undefined) // undefined = carregando, null = inválido
   const [loading, setLoading] = useState(true)
+  const { installed, promptInstall } = useInstallPrompt()
 
   useEffect(() => {
     let active = true
@@ -27,6 +32,43 @@ export default function PublicSummary() {
     })
     return () => { active = false }
   }, [token])
+
+  // Manifest dinâmico: instalar a partir do link abre direto NESTE resumo
+  // (start_url = a própria URL pública, em vez do app principal/login).
+  useEffect(() => {
+    if (!data) return
+    const abs = (f) => new URL(import.meta.env.BASE_URL + f, window.location.href).href
+    const manifest = {
+      name: `Krovo — ${data.project?.name || 'Obra'}`,
+      short_name: 'Krovo',
+      description: 'Resumo da obra',
+      start_url: window.location.href,
+      scope: new URL(import.meta.env.BASE_URL, window.location.href).href,
+      display: 'standalone',
+      theme_color: '#1f6f54',
+      background_color: '#f4f5f3',
+      icons: [
+        { src: abs('pwa-192.png'), sizes: '192x192', type: 'image/png', purpose: 'any' },
+        { src: abs('pwa-512.png'), sizes: '512x512', type: 'image/png', purpose: 'any' },
+        { src: abs('pwa-maskable.png'), sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+      ],
+    }
+    const blobUrl = URL.createObjectURL(new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' }))
+    let link = document.querySelector('link[rel="manifest"]')
+    const prev = link ? link.getAttribute('href') : null
+    if (!link) { link = document.createElement('link'); link.rel = 'manifest'; document.head.appendChild(link) }
+    link.setAttribute('href', blobUrl)
+    return () => {
+      URL.revokeObjectURL(blobUrl)
+      if (prev !== null) link.setAttribute('href', prev)
+    }
+  }, [data])
+
+  async function handleInstall() {
+    const r = await promptInstall()
+    if (r === 'ios') alert('Para instalar: toque em Compartilhar e em "Adicionar à Tela de Início".')
+    else if (r === 'unsupported') alert('Para instalar: abra o menu do navegador e escolha "Instalar app".')
+  }
 
   if (loading) return <div className="spinner-wrap"><Spinner /></div>
 
@@ -47,7 +89,7 @@ export default function PublicSummary() {
   return (
     <div className="page">
       <header className={styles.header}>
-        <div className={styles.brand}><Icon name="home_repair_service" fill={1} /> Reforma AI</div>
+        <div className={styles.brand}><img className={styles.brandLogo} src={logo} alt="" /> Krovo</div>
         <h1>{data.project?.name || 'Obra'}</h1>
         <span className="muted">Resumo da obra · somente leitura</span>
       </header>
@@ -127,7 +169,20 @@ export default function PublicSummary() {
         <div><span className="muted">Estimado a comprar</span><strong>{money(m.estimated_to_buy)}</strong></div>
       </div>
 
-      <footer className={styles.footer}>Gerado por Reforma AI</footer>
+      {!installed && (
+        <div className={`card ${styles.installCard}`}>
+          <div className={styles.installText}>
+            <strong>Instalar o app</strong>
+            <span className="muted">Acompanhe o resumo direto da tela inicial.</span>
+          </div>
+          <button className="btn btn-primary" onClick={handleInstall}>
+            <Icon name="install_mobile" size={18} /> Instalar
+          </button>
+        </div>
+      )}
+
+      <footer className={styles.footer}>Gerado por Krovo</footer>
+      <CompanyFooter />
     </div>
   )
 }
