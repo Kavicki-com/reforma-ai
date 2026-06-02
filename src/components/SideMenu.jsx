@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useAuth } from '../auth/AuthProvider'
-import { useInstallPrompt } from '../lib/useInstallPrompt'
 import { navItems } from '../lib/navItems'
 import Icon from './Icon'
+import InstallButton from './InstallButton'
 import CompanyFooter from './CompanyFooter'
 import styles from './SideMenu.module.css'
 
@@ -15,7 +15,6 @@ const menuLinks = navItems.filter((l) => l.to === '/orcamento')
 
 export default function SideMenu({ open, onClose }) {
   const { profile, signOut } = useAuth()
-  const { installed, promptInstall } = useInstallPrompt()
 
   useEffect(() => {
     if (!open) return
@@ -27,16 +26,6 @@ export default function SideMenu({ open, onClose }) {
       document.body.style.overflow = ''
     }
   }, [open, onClose])
-
-  async function handleInstall() {
-    const r = await promptInstall()
-    if (r === 'ios') {
-      alert('Para instalar no iPhone/iPad: toque em Compartilhar e em "Adicionar à Tela de Início".')
-    } else if (r === 'unsupported') {
-      alert('Para instalar: abra o menu do navegador e escolha "Instalar app".')
-    }
-    onClose()
-  }
 
   if (!open) return null
 
@@ -62,11 +51,10 @@ export default function SideMenu({ open, onClose }) {
               <Icon name={l.icon} size={22} /> {l.label}
             </NavLink>
           ))}
-          {!installed && (
-            <button type="button" className={styles.link} onClick={handleInstall}>
-              <Icon name="install_mobile" size={22} /> Instalar app
-            </button>
-          )}
+          <InstallButton
+            className={styles.link}
+            onAfter={(r) => { if (r === 'installed' || r === 'dismissed') onClose() }}
+          />
         </nav>
 
         <button className={styles.signout} onClick={signOut}>

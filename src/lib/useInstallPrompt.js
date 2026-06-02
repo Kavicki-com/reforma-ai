@@ -1,38 +1,65 @@
 import { useEffect, useState } from 'react'
 
-// Gerencia a instalação do PWA (Chrome/Edge/Android via beforeinstallprompt;
-// iOS/Safari não dispara o evento, então mostramos instruções).
+// Gerencia a instalação do PWA.
+// Chrome/Edge/Android disparam 'beforeinstallprompt' — guardamos o evento para
+// abrir o instalador nativo direto, sem o usuário entrar nas configurações.
+// iOS/Safari não dispara o evento, então mostramos instruções (Compartilhar →
+// Adicionar à Tela de Início).
+//
+// O evento 'beforeinstallprompt' dispara cedo, no carregamento da página. Por
+// isso escutamos no nível do módulo (uma vez só) e avisamos os componentes —
+// assim uma tela que monta depois (ex.: resumo público) não perde o evento.
+
+let deferredPrompt = null
+let installed = false
+const subscribers = new Set()
+
+function notify() {
+  for (const fn of subscribers) fn()
+}
+
+if (typeof window !== 'undefined') {
+  installed =
+    window.matchMedia('(display-mode: standalone)').matches ||
+    window.navigator.standalone === true
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault()
+    deferredPrompt = e
+    notify()
+  })
+  window.addEventListener('appinstalled', () => {
+    installed = true
+    deferredPrompt = null
+    notify()
+  })
+}
+
+const isIOS =
+  typeof navigator !== 'undefined' &&
+  (/iphone|ipad|ipod/i.test(navigator.userAgent) ||
+    // iPad em iOS 13+ se identifica como Mac, mas tem touch
+    (/Macintosh/.test(navigator.userAgent) && typeof document !== 'undefined' && 'ontouchend' in document))
+
 export function useInstallPrompt() {
-  const [deferred, setDeferred] = useState(null)
-  const [installed, setInstalled] = useState(false)
+  const [, force] = useState(0)
 
   useEffect(() => {
-    const standalone =
-      window.matchMedia('(display-mode: standalone)').matches ||
-      window.navigator.standalone === true
-    setInstalled(standalone)
-
-    const onPrompt = (e) => { e.preventDefault(); setDeferred(e) }
-    const onInstalled = () => { setInstalled(true); setDeferred(null) }
-    window.addEventListener('beforeinstallprompt', onPrompt)
-    window.addEventListener('appinstalled', onInstalled)
-    return () => {
-      window.removeEventListener('beforeinstallprompt', onPrompt)
-      window.removeEventListener('appinstalled', onInstalled)
-    }
+    const fn = () => force((n) => n + 1)
+    subscribers.add(fn)
+    return () => subscribers.delete(fn)
   }, [])
 
-  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent)
-
   async function promptInstall() {
-    if (deferred) {
-      deferred.prompt()
-      await deferred.userChoice
-      setDeferred(null)
-      return 'prompted'
+    if (deferredPrompt) {
+      deferredPrompt.prompt()
+      const choice = await deferredPrompt.userChoice
+      deferredPrompt = null
+      notify()
+      return choice?.outcome === 'accepted' ? 'installed' : 'dismissed'
     }
     return isIOS ? 'ios' : 'unsupported'
   }
 
-  return { canInstall: !!deferred, installed, isIOS, promptInstall }
+  return { canInstall: !!deferredPrompt, installed, isIOS, promptInstall }
 }

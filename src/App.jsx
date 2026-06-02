@@ -4,6 +4,7 @@ import BottomNav from './components/BottomNav'
 import Sidebar from './components/Sidebar'
 import Spinner from './components/Spinner'
 import Login from './routes/Login'
+import ConfirmEmail from './routes/ConfirmEmail'
 import PublicSummary from './routes/PublicSummary'
 import Dashboard from './routes/Dashboard'
 import Entries from './routes/Entries'
@@ -30,6 +31,7 @@ export default function App() {
       <div className="app-main">
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/confirme-email" element={<ConfirmEmail />} />
           <Route path="/s/:token" element={<PublicSummary />} />
           <Route path="/" element={<Protected><Dashboard /></Protected>} />
           <Route path="/lancamentos" element={<Protected><Entries /></Protected>} />
