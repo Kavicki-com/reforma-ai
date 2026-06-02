@@ -1,0 +1,67 @@
+.wrap {
+  flex: 1;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--sp-5);
+  gap: var(--sp-4);
+}
+.brand { text-align: center; }
+.brand h1 { font-size: 1.9rem; margin-top: var(--sp-3); }
+.logo {
+  width: 84px;
+  height: 84px;
+  border-radius: 22px;
+  object-fit: cover;
+  box-shadow: var(--shadow);
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--sp-3);
+}
+.iconWrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--primary);
+  background: var(--primary-soft);
+  margin-bottom: var(--sp-1);
+}
+.title { font-size: 1.25rem; }
+.card .btn { margin-top: var(--sp-2); }
+.success {
+  color: var(--success);
+  background: var(--success-soft);
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-size: .9rem;
+  width: 100%;
+}
+.error {
+  color: var(--danger);
+  background: var(--danger-soft);
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-size: .9rem;
+  width: 100%;
+}
+.back {
+  margin-top: var(--sp-2);
+  color: var(--primary);
+  font-weight: 600;
+  font-size: .9rem;
+  text-decoration: none;
+}
+.hint {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: .85rem;
+}

@@ -7,6 +7,7 @@ import ProgressBar from '../components/ProgressBar'
 import Donut from '../components/Donut'
 import Spinner from '../components/Spinner'
 import Icon from '../components/Icon'
+import InstallButton from '../components/InstallButton'
 import CompanyFooter from '../components/CompanyFooter'
 import styles from './PublicSummary.module.css'
 
@@ -35,7 +36,7 @@ export default function PublicSummary() {
   const [data, setData] = useState(undefined) // undefined = carregando, null = inválido
   const [loading, setLoading] = useState(true)
   const [photoUrls, setPhotoUrls] = useState({})
-  const { installed, promptInstall } = useInstallPrompt()
+  const { installed } = useInstallPrompt()
 
   // Busca o resumo ao abrir e sempre que a aba volta a ficar visível — assim,
   // ao fechar e reabrir o link (inclusive o PWA instalado retomado da memória),
@@ -111,12 +112,6 @@ export default function PublicSummary() {
       if (prev !== null) link.setAttribute('href', prev)
     }
   }, [data])
-
-  async function handleInstall() {
-    const r = await promptInstall()
-    if (r === 'ios') alert('Para instalar: toque em Compartilhar e em "Adicionar à Tela de Início".')
-    else if (r === 'unsupported') alert('Para instalar: abra o menu do navegador e escolha "Instalar app".')
-  }
 
   if (loading) return <div className="spinner-wrap"><Spinner /></div>
 
@@ -275,9 +270,7 @@ export default function PublicSummary() {
             <strong>Instalar o app</strong>
             <span className="muted">Acompanhe o resumo direto da tela inicial.</span>
           </div>
-          <button className="btn btn-primary" onClick={handleInstall}>
-            <Icon name="install_mobile" size={18} /> Instalar
-          </button>
+          <InstallButton className="btn btn-primary" label="Instalar" iconSize={18} />
         </div>
       )}
 
