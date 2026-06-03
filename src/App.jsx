@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from './auth/AuthProvider'
 import { useSubscription } from './lib/useSubscription'
+import { useProjects } from './lib/ProjectContext'
+import Onboarding from './components/Onboarding'
 import BottomNav from './components/BottomNav'
 import Sidebar from './components/Sidebar'
 import Spinner from './components/Spinner'
@@ -44,14 +46,20 @@ function Gate() {
   return null
 }
 
+// Rotas com dados de obra — exigem ao menos uma obra cadastrada.
+const obraRoutes = ['/', '/lancamentos', '/etapas', '/orcamento', '/materiais', '/fotos']
+
 export default function App() {
   const { session, loading } = useAuth()
+  const { needsOnboarding } = useProjects()
   const location = useLocation()
   const navigate = useNavigate()
   // rotas de transição (sem sessão "dentro do app")
   const authRoutes = ['/login', '/confirme-email', '/conta-confirmada']
   const inApp = session && !authRoutes.includes(location.pathname)
   const showNav = inApp
+  // Sem nenhuma obra: cai no onboarding nas telas que dependem de obra.
+  const showOnboarding = inApp && needsOnboarding && obraRoutes.includes(location.pathname)
 
   // O link de confirmação volta para a raiz com ?confirmed=1 (a sessão é criada
   // a partir do ?code= pelo Supabase). Capturamos o marcador e mandamos para a
@@ -77,6 +85,7 @@ export default function App() {
       {session && <Gate />}
       {inApp && <WelcomeModal />}
       <div className="app-main">
+        {showOnboarding ? <Onboarding /> : (
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/confirme-email" element={<ConfirmEmail />} />
@@ -92,6 +101,7 @@ export default function App() {
           <Route path="/configuracoes" element={<Protected><Configuracoes /></Protected>} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        )}
       </div>
       {showNav && <BottomNav />}
     </div>

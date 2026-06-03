@@ -25,13 +25,16 @@ export default function Shopping() {
   const aiInputRef = useRef(null)
 
   const load = useCallback(() => {
+    if (!project) { setItems([]); setLoading(false); return }
+    setLoading(true)
     supabase
       .from('shopping_items')
       .select('*')
+      .eq('project_id', project.id)
       .order('status', { ascending: true })
       .order('created_at', { ascending: false })
       .then(({ data }) => { setItems(data || []); setLoading(false) })
-  }, [])
+  }, [project])
 
   useEffect(() => { load() }, [load])
 

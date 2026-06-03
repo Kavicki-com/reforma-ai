@@ -36,6 +36,8 @@
 .brandLogo { width: 30px; height: 30px; border-radius: 8px; object-fit: cover; }
 .user { display: block; margin-top: 4px; font-size: .85rem; color: var(--text-muted); }
 
+.switcher { margin-bottom: var(--sp-3); }
+
 .nav { display: flex; flex-direction: column; gap: 2px; }
 .link {
   display: flex;

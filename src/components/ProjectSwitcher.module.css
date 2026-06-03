@@ -1,0 +1,88 @@
+.trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  width: 100%;
+  padding: 10px var(--sp-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: .95rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+}
+.trigger:hover { background: var(--surface-2); }
+.triggerIcon { color: var(--primary); flex-shrink: 0; }
+.triggerName {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.triggerChevron { color: var(--text-muted); flex-shrink: 0; }
+
+.usage { font-size: .9rem; color: var(--text); }
+.usageHint { color: var(--text-muted); }
+
+.filters { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+.chip {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: .85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.chipActive { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); }
+
+.list { display: flex; flex-direction: column; gap: var(--sp-2); }
+.row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-right: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+.row:hover { background: var(--surface-2); }
+.rowActive { border-color: var(--primary); background: var(--primary-soft); }
+.rowSelect {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 12px var(--sp-3);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+.rowMain { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.rowMain strong { color: var(--text); }
+.rowCheck { color: var(--primary); flex-shrink: 0; }
+.rowBusy { display: flex; align-items: center; padding: 0 8px; }
+.rowDel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.rowDel:hover { background: var(--surface-2); color: var(--danger); }
+
+.limit { display: flex; flex-direction: column; gap: var(--sp-2); }
+.limitMsg { font-size: .85rem; color: var(--text-muted); text-align: center; }
+
+.error { color: var(--danger); font-size: .9rem; }

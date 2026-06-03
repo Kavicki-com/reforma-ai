@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../auth/AuthProvider'
+import { useProject } from '../lib/useProject'
 import { money, dateBR } from '../lib/format'
 import Spinner from '../components/Spinner'
 import Icon from '../components/Icon'
@@ -24,18 +25,22 @@ const remainingOf = (e) => Math.max(0, Number(e.amount) - Number(e.paid_amount |
 
 export default function Entries() {
   const { isAdmin } = useAuth()
+  const { project } = useProject()
   const [entries, setEntries] = useState([])
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState('all')
   const [sheet, setSheet] = useState(null) // null = fechado | 'new' | <id>
 
   const load = useCallback(() => {
+    if (!project) { setEntries([]); setLoading(false); return }
+    setLoading(true)
     supabase
       .from('entries')
       .select('*, category:categories(name, kind), stage:stages(name), attachments(id)')
+      .eq('project_id', project.id)
       .order('entry_date', { ascending: false })
       .then(({ data }) => { setEntries(data || []); setLoading(false) })
-  }, [])
+  }, [project])
 
   useEffect(() => { load() }, [load])
 

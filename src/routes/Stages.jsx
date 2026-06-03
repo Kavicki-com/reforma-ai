@@ -23,12 +23,15 @@ export default function Stages() {
   const [saving, setSaving] = useState(false)
 
   const load = useCallback(() => {
+    if (!project) { setRows([]); setLoading(false); return }
+    setLoading(true)
     supabase
       .from('v_stage_totals')
       .select('*')
+      .eq('project_id', project.id)
       .order('start_date', { ascending: true, nullsFirst: false })
       .then(({ data }) => { setRows(data || []); setLoading(false) })
-  }, [])
+  }, [project])
 
   useEffect(() => { load() }, [load])
 
