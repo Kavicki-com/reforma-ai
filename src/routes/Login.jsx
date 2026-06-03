@@ -6,6 +6,7 @@ import Spinner from '../components/Spinner'
 import CompanyFooter from '../components/CompanyFooter'
 import PasswordInput from '../components/PasswordInput'
 import PasswordStrength from '../components/PasswordStrength'
+import PasswordMatch from '../components/PasswordMatch'
 import PlanPicker from '../components/PlanPicker'
 import { isValidEmail } from '../lib/validation'
 import styles from './Login.module.css'
@@ -203,6 +204,7 @@ export default function Login() {
               <div className="field">
                 <label>Confirmar senha</label>
                 <PasswordInput value={password2} onChange={(e) => setPassword2(e.target.value)} autoComplete="new-password" required />
+                <PasswordMatch value={password} confirm={password2} />
               </div>
             </>
           )}

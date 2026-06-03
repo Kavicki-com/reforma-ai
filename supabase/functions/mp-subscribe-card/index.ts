@@ -32,9 +32,18 @@ Deno.serve(async (req) => {
       transaction_amount: Number(plan.amount),
       currency_id: plan.currency || "BRL",
     }
-    // Trial grátis: adia a primeira cobrança em trial_days dias.
-    if (Number(plan.trial_days) > 0) {
-      autoRecurring.free_trial = { frequency: Number(plan.trial_days), frequency_type: "days" }
+    // Primeira cobrança alinhada ao fim do trial do app: usa os dias que restam
+    // de profiles.trial_ends_at como free_trial (não ganha dias extras nem perde
+    // os que já tinha). Trial vencido ou inexistente = cobra na hora.
+    const { data: prof } = await admin
+      .from("profiles")
+      .select("trial_ends_at")
+      .eq("id", user.id)
+      .single()
+    const msLeft = prof?.trial_ends_at ? new Date(prof.trial_ends_at).getTime() - Date.now() : 0
+    const daysLeft = Math.ceil(msLeft / 86_400_000)
+    if (daysLeft > 0) {
+      autoRecurring.free_trial = { frequency: daysLeft, frequency_type: "days" }
     }
 
     // preapproval SEM plano associado: auto_recurring inline + status authorized.

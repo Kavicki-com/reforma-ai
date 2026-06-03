@@ -18,6 +18,10 @@ export function ProjectProvider({ children }) {
 
   const refresh = useCallback(async () => {
     if (!user) { setProjects([]); setActiveId(null); setLoading(false); return }
+    // Marca como carregando ANTES do fetch: sem isso, ao logar, `loading`
+    // ainda é false da rodada sem usuário e o Onboarding pisca na tela
+    // até as obras chegarem (needsOnboarding falso-positivo).
+    setLoading(true)
     const { data } = await supabase
       .from('projects')
       .select('*')

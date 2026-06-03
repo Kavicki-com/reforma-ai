@@ -5,6 +5,7 @@ import { useAuth } from '../auth/AuthProvider'
 import { lookupCep, maskCep } from '../lib/cep'
 import PasswordInput from '../components/PasswordInput'
 import PasswordStrength from '../components/PasswordStrength'
+import PasswordMatch from '../components/PasswordMatch'
 import BottomSheet from '../components/BottomSheet'
 import Toast from '../components/Toast'
 import Spinner from '../components/Spinner'
@@ -171,6 +172,7 @@ function PasswordSection({ setToast }) {
       <div className="field">
         <label>Confirmar nova senha</label>
         <PasswordInput value={pw2} onChange={(e) => setPw2(e.target.value)} autoComplete="new-password" required />
+        <PasswordMatch value={pw} confirm={pw2} />
       </div>
       <button className="btn btn-primary btn-block" disabled={busy}>{busy ? <Spinner small /> : 'Alterar senha'}</button>
     </form>

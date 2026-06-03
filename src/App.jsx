@@ -51,7 +51,7 @@ const obraRoutes = ['/', '/lancamentos', '/etapas', '/orcamento', '/materiais', 
 
 export default function App() {
   const { session, loading } = useAuth()
-  const { needsOnboarding } = useProjects()
+  const { needsOnboarding, loading: projectsLoading } = useProjects()
   const location = useLocation()
   const navigate = useNavigate()
   // rotas de transição (sem sessão "dentro do app")
@@ -59,7 +59,11 @@ export default function App() {
   const inApp = session && !authRoutes.includes(location.pathname)
   const showNav = inApp
   // Sem nenhuma obra: cai no onboarding nas telas que dependem de obra.
-  const showOnboarding = inApp && needsOnboarding && obraRoutes.includes(location.pathname)
+  // Enquanto as obras carregam, segura num spinner — decide entre Onboarding
+  // e conteúdo só com a resposta na mão (sem piscar nenhum dos dois).
+  const onObraRoute = obraRoutes.includes(location.pathname)
+  const projectsPending = inApp && projectsLoading && onObraRoute
+  const showOnboarding = inApp && needsOnboarding && onObraRoute
 
   // O link de confirmação volta para a raiz com ?confirmed=1 (a sessão é criada
   // a partir do ?code= pelo Supabase). Capturamos o marcador e mandamos para a
@@ -83,9 +87,11 @@ export default function App() {
     <div className="app-shell">
       {showNav && <Sidebar />}
       {session && <Gate />}
-      {inApp && <WelcomeModal />}
+      {/* Boas-vindas só com as obras carregadas e fora do onboarding —
+          senão ele abre durante o spinner e sobrepõe o Onboarding. */}
+      {inApp && !projectsLoading && !needsOnboarding && <WelcomeModal />}
       <div className="app-main">
-        {showOnboarding ? <Onboarding /> : (
+        {projectsPending ? <div className="spinner-wrap"><Spinner /></div> : showOnboarding ? <Onboarding /> : (
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/confirme-email" element={<ConfirmEmail />} />
