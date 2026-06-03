@@ -26,7 +26,8 @@ import WelcomeModal from './components/WelcomeModal'
 function Protected({ children }) {
   const { session, loading } = useAuth()
   if (loading) return <div className="spinner-wrap"><Spinner /></div>
-  if (!session) return <Navigate to="/login" replace />
+  // Sem sessão, qualquer rota do app cai na landing (e de lá o visitante entra/cadastra).
+  if (!session) return <Navigate to="/" replace />
   return children
 }
 

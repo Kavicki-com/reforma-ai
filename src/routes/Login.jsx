@@ -158,6 +158,9 @@ export default function Login() {
 
   return (
     <div className={`${styles.wrap} ${wide ? styles.wrap_wide : ''}`}>
+      <Link to="/" className={styles.siteLink}>
+        <span className="material-symbols-rounded" aria-hidden="true">arrow_back</span> Ir para o site
+      </Link>
       <div className={styles.brand}>
         <img className={styles.logo} src={logo} alt="Krovo" />
         <h1>Krovo</h1>
