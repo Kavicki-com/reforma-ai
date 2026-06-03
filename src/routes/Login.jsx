@@ -5,7 +5,9 @@ import { lookupCep, maskCep } from '../lib/cep'
 import Spinner from '../components/Spinner'
 import CompanyFooter from '../components/CompanyFooter'
 import PasswordInput from '../components/PasswordInput'
+import PasswordStrength from '../components/PasswordStrength'
 import PlanPicker from '../components/PlanPicker'
+import { isValidEmail } from '../lib/validation'
 import styles from './Login.module.css'
 
 const logo = `${import.meta.env.BASE_URL}pwa-192.png`
@@ -67,6 +69,7 @@ export default function Login() {
     if (step === 0) {
       if (!fullName.trim()) return 'Informe seu nome.'
       if (!email.trim()) return 'Informe seu e-mail.'
+      if (!isValidEmail(email)) return 'Informe um e-mail válido.'
       if (password.length < 6) return 'A senha precisa ter pelo menos 6 caracteres.'
       if (password !== password2) return 'As senhas não conferem.'
     }
@@ -195,6 +198,7 @@ export default function Login() {
               <div className="field">
                 <label>Senha</label>
                 <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="new-password" required />
+                <PasswordStrength value={password} />
               </div>
               <div className="field">
                 <label>Confirmar senha</label>
