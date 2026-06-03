@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { useAuth } from '../auth/AuthProvider'
 import { lookupCep, maskCep } from '../lib/cep'
 import Spinner from '../components/Spinner'
@@ -18,7 +18,19 @@ const emptyAddr = { cep: '', street: '', number: '', complement: '', neighborhoo
 export default function Login() {
   const { session, signIn, signUp } = useAuth()
   const navigate = useNavigate()
-  const [mode, setMode] = useState('signin') // 'signin' | 'signup'
+  // 'signin' | 'signup' — a landing manda pra cá com ?cadastro=1 pra abrir direto no cadastro.
+  // Com HashRouter a query fica dentro do hash (#/login?cadastro=1), então lemos do router.
+  const location = useLocation()
+  const [mode, setMode] = useState(() =>
+    window.location.hash.includes('cadastro=1') ? 'signup' : 'signin',
+  )
+  // Reage à URL mesmo com o componente já montado (ex.: landing → Entrar → landing → Começar grátis)
+  useEffect(() => {
+    const wantsSignup = new URLSearchParams(location.search).get('cadastro') === '1'
+    setMode(wantsSignup ? 'signup' : 'signin')
+    setStep(0)
+    setError('')
+  }, [location.search])
   const [step, setStep] = useState(0) // wizard do signup: 0 conta, 1 endereço, 2 plano
 
   const [fullName, setFullName] = useState('')
@@ -262,6 +274,12 @@ export default function Login() {
           )}
 
           {error && <p className={styles.error}>{error}</p>}
+
+          <p className={styles.consent}>
+            Ao continuar você confirma estar de acordo com as{' '}
+            <Link to="/privacidade">políticas</Link> e{' '}
+            <Link to="/termos">termos de uso</Link> do Krovo.
+          </p>
 
           <div className={styles.actions}>
             <button className="btn btn-primary btn-block" disabled={busy}>

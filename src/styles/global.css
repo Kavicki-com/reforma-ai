@@ -71,6 +71,9 @@ input, select, textarea {
   flex-direction: column;
 }
 
+/* Landing pra visitantes: página full-bleed, sem a coluna de 680px */
+.app-main--full { max-width: none; }
+
 .page {
   flex: 1;
   padding: var(--sp-4);

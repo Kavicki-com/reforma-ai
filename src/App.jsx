@@ -7,6 +7,7 @@ import Onboarding from './components/Onboarding'
 import BottomNav from './components/BottomNav'
 import Sidebar from './components/Sidebar'
 import Spinner from './components/Spinner'
+import Landing from './routes/Landing'
 import Login from './routes/Login'
 import ConfirmEmail from './routes/ConfirmEmail'
 import PublicSummary from './routes/PublicSummary'
@@ -19,6 +20,7 @@ import Photos from './routes/Photos'
 import Subscription from './routes/Subscription'
 import Configuracoes from './routes/Configuracoes'
 import ContaConfirmada from './routes/ContaConfirmada'
+import { Termos, Privacidade } from './routes/Legal'
 import WelcomeModal from './components/WelcomeModal'
 
 function Protected({ children }) {
@@ -26,6 +28,13 @@ function Protected({ children }) {
   if (loading) return <div className="spinner-wrap"><Spinner /></div>
   if (!session) return <Navigate to="/login" replace />
   return children
+}
+
+// Raiz: visitante vê a landing; logado vê o Dashboard.
+function Home() {
+  const { session, loading } = useAuth()
+  if (loading) return <div className="spinner-wrap"><Spinner /></div>
+  return session ? <Dashboard /> : <Landing />
 }
 
 // Gate de acesso: libera durante o trial (sem cartão) e para assinantes ativos.
@@ -40,7 +49,7 @@ function Gate() {
     const trialEnd = profile?.trial_ends_at ? new Date(profile.trial_ends_at) : null
     const inTrial = trialEnd && trialEnd > new Date()
     const hasAccess = isActive || inTrial
-    const allowed = ['/assinatura', '/conta-confirmada', '/configuracoes'].includes(location.pathname)
+    const allowed = ['/assinatura', '/conta-confirmada', '/configuracoes', '/termos', '/privacidade'].includes(location.pathname)
     if (!hasAccess && !allowed) navigate('/assinatura', { replace: true })
   }, [loading, subLoading, profile, isActive, location.pathname, navigate])
   return null
@@ -55,9 +64,11 @@ export default function App() {
   const location = useLocation()
   const navigate = useNavigate()
   // rotas de transição (sem sessão "dentro do app")
-  const authRoutes = ['/login', '/confirme-email', '/conta-confirmada']
+  const authRoutes = ['/login', '/confirme-email', '/conta-confirmada', '/termos', '/privacidade']
   const inApp = session && !authRoutes.includes(location.pathname)
   const showNav = inApp
+  // Landing na raiz pra visitantes: solta a largura do container (página full-bleed).
+  const isLanding = !loading && !session && location.pathname === '/'
   // Sem nenhuma obra: cai no onboarding nas telas que dependem de obra.
   // Enquanto as obras carregam, segura num spinner — decide entre Onboarding
   // e conteúdo só com a resposta na mão (sem piscar nenhum dos dois).
@@ -90,14 +101,16 @@ export default function App() {
       {/* Boas-vindas só com as obras carregadas e fora do onboarding —
           senão ele abre durante o spinner e sobrepõe o Onboarding. */}
       {inApp && !projectsLoading && !needsOnboarding && <WelcomeModal />}
-      <div className="app-main">
+      <div className={`app-main ${isLanding ? 'app-main--full' : ''}`}>
         {projectsPending ? <div className="spinner-wrap"><Spinner /></div> : showOnboarding ? <Onboarding /> : (
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/confirme-email" element={<ConfirmEmail />} />
           <Route path="/conta-confirmada" element={<ContaConfirmada />} />
           <Route path="/s/:token" element={<PublicSummary />} />
-          <Route path="/" element={<Protected><Dashboard /></Protected>} />
+          <Route path="/termos" element={<Termos />} />
+          <Route path="/privacidade" element={<Privacidade />} />
+          <Route path="/" element={<Home />} />
           <Route path="/lancamentos" element={<Protected><Entries /></Protected>} />
           <Route path="/etapas" element={<Protected><Stages /></Protected>} />
           <Route path="/orcamento" element={<Protected><Budget /></Protected>} />

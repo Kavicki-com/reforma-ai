@@ -43,6 +43,14 @@
   font-size: .9rem;
   color: var(--text-muted, #64748b);
 }
+/* Aviso de aceite dos termos no cadastro (acima do botão Continuar/Criar conta) */
+.consent {
+  text-align: center;
+  font-size: .82rem;
+  color: var(--text-muted);
+  margin-bottom: var(--sp-3);
+}
+.consent a { font-weight: 600; }
 .toggleBtn {
   background: none;
   border: none;
