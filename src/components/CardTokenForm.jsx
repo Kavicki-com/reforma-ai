@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { getMercadoPago } from '../lib/mercadopago'
+import { maskCpf, isValidCpf } from '../lib/validation'
 import Spinner from './Spinner'
 import styles from './CardTokenForm.module.css'
 
@@ -41,6 +42,7 @@ export default function CardTokenForm({ submitLabel = 'Confirmar', onToken, busy
   async function submit(e) {
     e.preventDefault()
     setError?.('')
+    if (!isValidCpf(cpf)) { setError?.('Informe um CPF válido.'); return }
     setBusy?.(true)
     try {
       const token = await mpRef.current.fields.createCardToken({
@@ -78,7 +80,8 @@ export default function CardTokenForm({ submitLabel = 'Confirmar', onToken, busy
       </div>
       <div className="field">
         <label>CPF do titular</label>
-        <input className="input" inputMode="numeric" value={cpf} onChange={(e) => setCpf(e.target.value)} required />
+        <input className="input" inputMode="numeric" placeholder="000.000.000-00"
+          value={maskCpf(cpf)} onChange={(e) => setCpf(e.target.value.replace(/\D/g, ''))} required />
       </div>
       <button className="btn btn-primary btn-block" disabled={busy || !ready}>
         {busy ? <Spinner small /> : submitLabel}

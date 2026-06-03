@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../auth/AuthProvider'
+import { maskCpf, isValidCpf } from '../lib/validation'
 import Spinner from './Spinner'
 import Icon from './Icon'
 import CardTokenForm from './CardTokenForm'
@@ -130,6 +131,7 @@ function PixBoletoForm({ method, email, busy, setBusy, setError, pix, setPix, bo
   async function submit(e) {
     e.preventDefault()
     setError('')
+    if (!isValidCpf(cpf)) { setError('Informe um CPF válido.'); return }
     setBusy(true)
     try {
       const [first, ...rest] = name.trim().split(' ')
@@ -196,7 +198,8 @@ function PixBoletoForm({ method, email, busy, setBusy, setError, pix, setPix, bo
       </div>
       <div className="field">
         <label>CPF</label>
-        <input className="input" inputMode="numeric" value={cpf} onChange={(e) => setCpf(e.target.value)} required />
+        <input className="input" inputMode="numeric" placeholder="000.000.000-00"
+          value={maskCpf(cpf)} onChange={(e) => setCpf(e.target.value.replace(/\D/g, ''))} required />
       </div>
       <button className="btn btn-primary btn-block" disabled={busy}>
         {busy ? <Spinner small /> : method === 'pix' ? 'Gerar PIX' : 'Gerar boleto'}

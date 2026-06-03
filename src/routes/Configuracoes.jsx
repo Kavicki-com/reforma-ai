@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase'
 import { useAuth } from '../auth/AuthProvider'
 import { lookupCep, maskCep } from '../lib/cep'
 import PasswordInput from '../components/PasswordInput'
+import PasswordStrength from '../components/PasswordStrength'
 import BottomSheet from '../components/BottomSheet'
 import Toast from '../components/Toast'
 import Spinner from '../components/Spinner'
@@ -165,6 +166,7 @@ function PasswordSection({ setToast }) {
       <div className="field">
         <label>Nova senha</label>
         <PasswordInput value={pw} onChange={(e) => setPw(e.target.value)} autoComplete="new-password" required />
+        <PasswordStrength value={pw} />
       </div>
       <div className="field">
         <label>Confirmar nova senha</label>
