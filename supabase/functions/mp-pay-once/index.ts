@@ -1,5 +1,5 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts"
-import { adminClient, corsHeaders, env, getUser, json, mpAccessToken, mpFetch } from "../_shared/mp.ts"
+import { adminClient, corsHeaders, getUser, json, mpFetch } from "../_shared/mp.ts"
 
 // Pagamento avulso (PIX ou boleto) do plano anual à vista — sem renovação automática.
 Deno.serve(async (req) => {
@@ -47,9 +47,8 @@ Deno.serve(async (req) => {
       body: JSON.stringify(payload),
     })
     if (!mp.ok) {
-      const debug = { mpEnv: env("MP_ENV") || "(vazio)", tokenApp: (mpAccessToken().split("-")[1] || "?") }
-      console.error("[mp-pay-once] MP erro", mp.status, JSON.stringify(mp.data), "debug", JSON.stringify(debug))
-      return json({ ok: false, error: mp.data?.message || "Falha ao gerar pagamento.", detail: mp.data, debug }, 502)
+      console.error("[mp-pay-once] MP erro", mp.status, JSON.stringify(mp.data))
+      return json({ ok: false, error: mp.data?.message || "Falha ao gerar pagamento.", detail: mp.data }, 502)
     }
 
     const p = mp.data
