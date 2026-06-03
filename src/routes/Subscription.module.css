@@ -1,0 +1,92 @@
+.wrap {
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: var(--sp-5) var(--sp-4) calc(var(--nav-h) + var(--sp-5));
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+.title { font-size: 1.5rem; }
+.subtitle { font-size: 1.1rem; margin-bottom: var(--sp-3); }
+
+.payCard { display: block; }
+
+.statusCard { display: flex; flex-direction: column; gap: var(--sp-3); }
+.statusHead { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp-3); }
+.planRow { display: flex; align-items: center; gap: var(--sp-3); }
+.ok { color: var(--success); }
+.planName { font-family: var(--font-title); font-weight: 600; font-size: 1.2rem; }
+.priceLine { font-size: 1.1rem; font-weight: 700; color: var(--text); }
+.priceLine small { font-size: .8rem; font-weight: 500; color: var(--text-muted); }
+
+.detailRow {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: .92rem;
+  color: var(--text);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--border);
+}
+.detIcon { color: var(--text-muted); flex-shrink: 0; }
+.linkBtn {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-weight: 600;
+  font-size: .9rem;
+  cursor: pointer;
+  padding: 0;
+}
+.cancelBtn { margin-top: var(--sp-2); }
+.error {
+  color: var(--danger);
+  background: var(--danger-soft);
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-size: .9rem;
+  margin-bottom: var(--sp-3);
+}
+
+/* Histórico de pagamentos */
+.history { display: flex; flex-direction: column; }
+.payList { list-style: none; display: flex; flex-direction: column; gap: var(--sp-2); }
+.payItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--sp-3);
+}
+.payAmount { font-weight: 600; display: block; }
+.payMeta { font-size: .82rem; color: var(--text-muted); }
+
+.notice,
+.payCard {
+  width: 100%;
+}
+.notice {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  color: var(--text-muted);
+  font-size: .9rem;
+  background: var(--warning-soft);
+  padding: var(--sp-3);
+  border-radius: var(--radius-sm);
+}
+.trialInfo,
+.trialEnded {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: .9rem;
+  padding: var(--sp-3);
+  border-radius: var(--radius-sm);
+}
+.trialInfo { color: var(--info); background: var(--info-soft); }
+.trialEnded { color: var(--danger); background: var(--danger-soft); font-weight: 600; }
