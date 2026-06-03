@@ -12,7 +12,7 @@ export function useSubscription() {
     if (!user) { setSubscription(null); setLoading(false); return }
     const { data } = await supabase
       .from('subscriptions')
-      .select('id, plan_code, status, kind, current_period_end, next_payment_date, auto_renew, card_last4, card_brand, plans(name, amount, billing_period)')
+      .select('id, plan_code, status, kind, current_period_end, next_payment_date, auto_renew, card_last4, card_brand, plans(name, amount, billing_period, max_active_projects)')
       .eq('owner_id', user.id)
       .maybeSingle()
     setSubscription(data ?? null)

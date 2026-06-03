@@ -30,9 +30,12 @@ export default function Photos() {
   const [uploading, setUploading] = useState(false)
 
   const load = useCallback(async () => {
+    if (!project) { setPhotos([]); setLoading(false); return }
+    setLoading(true)
     const { data } = await supabase
       .from('photos')
       .select('*')
+      .eq('project_id', project.id)
       .order('created_at', { ascending: false })
     const list = data || []
     setPhotos(list)
@@ -45,7 +48,7 @@ export default function Photos() {
       setUrls(map)
     }
     setLoading(false)
-  }, [])
+  }, [project])
 
   useEffect(() => { load() }, [load])
 

@@ -5,6 +5,7 @@ import { navItems } from '../lib/navItems'
 import Icon from './Icon'
 import InstallButton from './InstallButton'
 import CompanyFooter from './CompanyFooter'
+import ProjectSwitcher from './ProjectSwitcher'
 import styles from './SideMenu.module.css'
 
 const logo = `${import.meta.env.BASE_URL}pwa-192.png`
@@ -37,6 +38,10 @@ export default function SideMenu({ open, onClose }) {
             <img className={styles.brandLogo} src={logo} alt="" /> Krovo
           </div>
           {profile?.full_name && <span className={styles.user}>{profile.full_name}</span>}
+        </div>
+
+        <div className={styles.switcher}>
+          <ProjectSwitcher onNavigate={onClose} />
         </div>
 
         <nav className={styles.nav}>

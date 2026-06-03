@@ -34,20 +34,20 @@ export default function EntrySheet({ open, entryId, onClose, onSaved }) {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
 
-  // Carrega categorias e etapas (uma vez, ao abrir)
+  // Carrega categorias (globais) e etapas da obra ativa ao abrir
   useEffect(() => {
-    if (!open) return
+    if (!open || !project) return
     let active = true
     Promise.all([
       supabase.from('categories').select('id, name').order('name'),
-      supabase.from('stages').select('id, name').order('sort_order'),
+      supabase.from('stages').select('id, name').eq('project_id', project.id).order('sort_order'),
     ]).then(([cats, sts]) => {
       if (!active) return
       setCategories(cats.data || [])
       setStages(sts.data || [])
     })
     return () => { active = false }
-  }, [open])
+  }, [open, project])
 
   // Prepara o formulario quando abre (novo => limpa; edicao => carrega)
   useEffect(() => {

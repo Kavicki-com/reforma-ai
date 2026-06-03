@@ -1,26 +1,8 @@
-import { useEffect, useState } from 'react'
-import { supabase } from './supabase'
+import { useProjects } from './ProjectContext'
 
-// v1: uma unica obra. Busca a primeira (mais antiga).
+// Compat: a partir do multi-obra, a "obra" é a obra ativa do ProjectContext.
+// Mantém a assinatura { project, loading } usada pelas telas.
 export function useProject() {
-  const [project, setProject] = useState(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    let active = true
-    supabase
-      .from('projects')
-      .select('*')
-      .order('created_at', { ascending: true })
-      .limit(1)
-      .maybeSingle()
-      .then(({ data }) => {
-        if (!active) return
-        setProject(data)
-        setLoading(false)
-      })
-    return () => { active = false }
-  }, [])
-
-  return { project, loading }
+  const { activeProject, loading } = useProjects()
+  return { project: activeProject, loading }
 }

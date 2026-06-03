@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { HashRouter } from 'react-router-dom'
 import App from './App.jsx'
 import { AuthProvider } from './auth/AuthProvider.jsx'
+import { ProjectProvider } from './lib/ProjectContext.jsx'
 import './styles/tokens.css'
 import './styles/global.css'
 
@@ -10,7 +11,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <HashRouter>
       <AuthProvider>
-        <App />
+        <ProjectProvider>
+          <App />
+        </ProjectProvider>
       </AuthProvider>
     </HashRouter>
   </React.StrictMode>,

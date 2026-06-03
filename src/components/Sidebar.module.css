@@ -15,7 +15,8 @@
     border-right: 1px solid var(--border);
   }
 
-  .head { padding-bottom: var(--sp-5); border-bottom: 1px solid var(--border); margin-bottom: var(--sp-4); }
+  .head { flex-shrink: 0; padding-bottom: var(--sp-5); border-bottom: 1px solid var(--border); margin-bottom: var(--sp-4); }
+  .switcher { flex-shrink: 0; margin-bottom: var(--sp-4); }
   .brand {
     display: flex;
     align-items: center;
@@ -28,7 +29,7 @@
   .brandLogo { width: 32px; height: 32px; border-radius: 8px; object-fit: cover; }
   .user { display: block; margin-top: 6px; font-size: .85rem; color: var(--text-muted); }
 
-  .nav { display: flex; flex-direction: column; gap: 2px; }
+  .nav { display: flex; flex-direction: column; gap: 4px; }
   .link {
     display: flex;
     align-items: center;
@@ -37,12 +38,13 @@
     border-radius: var(--radius-sm);
     color: var(--text);
     font-weight: 600;
+    line-height: 1.2;
   }
   .link:hover { background: var(--surface-2); }
   .active { background: var(--primary-soft); color: var(--primary); }
   .active:hover { background: var(--primary-soft); }
 
-  .footer { margin-top: auto; display: flex; flex-direction: column; gap: var(--sp-2); }
+  .footer { margin-top: auto; flex-shrink: 0; display: flex; flex-direction: column; gap: var(--sp-2); padding-top: var(--sp-4); }
   .install {
     display: flex;
     align-items: center;
