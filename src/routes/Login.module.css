@@ -1,8 +1,10 @@
 .wrap {
   flex: 1;
   width: 100%;
-  max-width: 420px;
+  /* desktop: 728px (ou 40% da tela), centralizado; mobile cai pra largura total */
+  max-width: min(728px, max(40%, 420px));
   margin: 0 auto;
+  transition: max-width .2s ease;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -51,3 +53,76 @@
   cursor: pointer;
   font-size: inherit;
 }
+
+/* Passo do plano: alarga o form (até 960px) pra acomodar os dois cards. */
+.wrap_wide { max-width: min(960px, 94vw); }
+
+/* mobile: form ocupa 100% com 16px de padding nas laterais */
+@media (max-width: 600px) {
+  .wrap,
+  .wrap_wide {
+    max-width: 100%;
+    padding-left: var(--sp-4);
+    padding-right: var(--sp-4);
+  }
+}
+
+/* Wizard do signup — stepper fora do card (compacta e centralizada) */
+.stepper {
+  display: flex;
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+}
+.stepItem {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+}
+/* linha conectando ao passo anterior (atrás dos círculos) */
+.stepItem:not(:first-child)::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  right: 50%;
+  left: -50%;
+  height: 3px;
+  background: var(--border);
+  z-index: 0;
+}
+.fill::before { background: var(--primary); }
+.dot {
+  position: relative;
+  z-index: 1;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .9rem;
+  font-weight: 600;
+  background: #d8ddd7;
+  color: var(--text);
+}
+.dotDone { background: var(--primary); color: #fff; }
+.dotActive { box-shadow: 0 0 0 4px var(--primary-soft); }
+.stepLabel { font-size: .82rem; color: var(--text-muted); }
+.stepLabelActive { color: var(--text); font-weight: 700; }
+
+.cepRow { display: flex; align-items: center; gap: var(--sp-2); }
+.addrRow { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); }
+.actions { display: flex; flex-direction: column; gap: var(--sp-3); margin-top: var(--sp-5); }
+
+/* mais respiro vertical e entre os elementos — só no passo do plano */
+.wrap_wide .card {
+  padding: var(--sp-6) var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+.wrap_wide .actions { margin-top: 0; }
+.wrap_wide .toggle { margin-top: 0; }

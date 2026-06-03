@@ -32,6 +32,18 @@ export default function Sidebar() {
             <Icon name={l.icon} size={22} /> {l.label}
           </NavLink>
         ))}
+        <NavLink
+          to="/assinatura"
+          className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
+        >
+          <Icon name="credit_card" size={22} /> Assinatura
+        </NavLink>
+        <NavLink
+          to="/configuracoes"
+          className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
+        >
+          <Icon name="settings" size={22} /> Configurações
+        </NavLink>
       </nav>
 
       <div className={styles.footer}>

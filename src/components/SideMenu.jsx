@@ -51,6 +51,20 @@ export default function SideMenu({ open, onClose }) {
               <Icon name={l.icon} size={22} /> {l.label}
             </NavLink>
           ))}
+          <NavLink
+            to="/assinatura"
+            onClick={onClose}
+            className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
+          >
+            <Icon name="credit_card" size={22} /> Assinatura
+          </NavLink>
+          <NavLink
+            to="/configuracoes"
+            onClick={onClose}
+            className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
+          >
+            <Icon name="settings" size={22} /> Configurações
+          </NavLink>
           <InstallButton
             className={styles.link}
             onAfter={(r) => { if (r === 'installed' || r === 'dismissed') onClose() }}

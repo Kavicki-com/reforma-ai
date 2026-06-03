@@ -45,7 +45,7 @@ export function AuthProvider({ children }) {
     let active = true
     supabase
       .from('profiles')
-      .select('id, full_name, role')
+      .select('id, full_name, role, trial_ends_at')
       .eq('id', userId)
       .single()
       .then(({ data }) => {
@@ -64,16 +64,16 @@ export function AuthProvider({ children }) {
     isAdmin: profile?.role === 'admin',
     loading,
     signIn: (email, password) => supabase.auth.signInWithPassword({ email, password }),
-    signUp: (email, password, fullName) =>
+    signUp: (email, password, fullName, meta = {}) =>
       supabase.auth.signUp({
         email,
         password,
         options: {
-          data: { full_name: fullName },
+          data: { full_name: fullName, ...meta },
           // Confirmação de e-mail: o link volta para onde o app está servido
           // (produção, subdomínio ou localhost). A URL precisa estar na lista
           // de Redirect URLs do Supabase (Authentication → URL Configuration).
-          emailRedirectTo: window.location.origin,
+          emailRedirectTo: `${window.location.origin}/?confirmed=1`,
         },
       }),
     resendSignup: (email) =>
