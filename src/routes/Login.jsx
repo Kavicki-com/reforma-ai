@@ -8,6 +8,9 @@ import PasswordInput from '../components/PasswordInput'
 import PasswordStrength from '../components/PasswordStrength'
 import PasswordMatch from '../components/PasswordMatch'
 import PlanPicker from '../components/PlanPicker'
+import BottomSheet from '../components/BottomSheet'
+import { TermosContent, PrivacidadeContent } from './Legal'
+import { captureLead } from '../lib/leads'
 import { isValidEmail } from '../lib/validation'
 import styles from './Login.module.css'
 
@@ -43,6 +46,9 @@ export default function Login() {
   const [cepLoading, setCepLoading] = useState(false)
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
+  // Modal de termos/privacidade: 'termos' | 'privacidade' | null. Abre como
+  // sheet sem tirar o usuário do wizard de cadastro.
+  const [legal, setLegal] = useState(null)
 
   const isSignup = mode === 'signup'
 
@@ -178,6 +184,7 @@ export default function Login() {
             <label>Senha</label>
             <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" required />
           </div>
+          <Link to="/recuperar-senha" className={styles.forgot}>Esqueci minha senha</Link>
           {error && <p className={styles.error}>{error}</p>}
           <button className="btn btn-primary btn-block" disabled={busy}>
             {busy ? <Spinner small /> : 'Entrar'}
@@ -209,7 +216,8 @@ export default function Login() {
               <div className="field">
                 <label>E-mail</label>
                 <input className="input" type="email" autoComplete="email"
-                  value={email} onChange={(e) => setEmail(e.target.value)} required />
+                  value={email} onChange={(e) => setEmail(e.target.value)}
+                  onBlur={() => { if (isValidEmail(email)) captureLead(fullName, email) }} required />
               </div>
               <div className="field">
                 <label>Senha</label>
@@ -280,8 +288,8 @@ export default function Login() {
 
           <p className={styles.consent}>
             Ao continuar você confirma estar de acordo com as{' '}
-            <Link to="/privacidade">políticas</Link> e{' '}
-            <Link to="/termos">termos de uso</Link> do Krovo.
+            <button type="button" className={styles.linkBtn} onClick={() => setLegal('privacidade')}>políticas</button> e{' '}
+            <button type="button" className={styles.linkBtn} onClick={() => setLegal('termos')}>termos de uso</button> do Krovo.
           </p>
 
           <div className={styles.actions}>
@@ -300,6 +308,15 @@ export default function Login() {
         </form>
         </>
       )}
+
+      <BottomSheet
+        open={!!legal}
+        title={legal === 'termos' ? 'Termos de Uso' : 'Política de Privacidade'}
+        onClose={() => setLegal(null)}
+      >
+        {legal === 'termos' ? <TermosContent /> : legal === 'privacidade' ? <PrivacidadeContent /> : null}
+      </BottomSheet>
+
       <CompanyFooter />
     </div>
   )

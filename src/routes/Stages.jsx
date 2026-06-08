@@ -9,8 +9,8 @@ import BottomSheet from '../components/BottomSheet'
 import KebabMenu from '../components/KebabMenu'
 import styles from './Stages.module.css'
 
-const STATUS_LABEL = { pendente: 'Pendente', em_andamento: 'Em andamento', concluida: 'Concluída' }
-const STATUS_BADGE = { pendente: 'badge-pending', em_andamento: 'badge-info', concluida: 'badge-paid' }
+const STATUS_LABEL = { pendente: 'Pendente', em_andamento: 'Em andamento', pausada: 'Pausada', concluida: 'Concluída' }
+const STATUS_BADGE = { pendente: 'badge-pending', em_andamento: 'badge-info', pausada: 'badge-muted', concluida: 'badge-paid' }
 const emptyStage = { name: '', budget: '', start_date: '', end_date: '', status: 'pendente' }
 
 export default function Stages() {
@@ -128,29 +128,49 @@ export default function Stages() {
                     <span className="muted">Orçamento da etapa: <strong>{money(r.budget)}</strong></span>
                   </div>
                 )}
-                {isAdmin && r.status === 'pendente' && (
-                  <button
-                    className={`btn btn-ghost btn-block btn-sm ${styles.completeBtn}`}
-                    onClick={() => changeStatus(r, 'em_andamento')}
-                  >
-                    <Icon name="play_arrow" size={18} /> Iniciar etapa
-                  </button>
-                )}
-                {isAdmin && r.status === 'em_andamento' && (
-                  <button
-                    className={`btn btn-primary btn-block btn-sm ${styles.completeBtn}`}
-                    onClick={() => changeStatus(r, 'concluida', new Date().toISOString().slice(0, 10))}
-                  >
-                    <Icon name="check_circle" size={18} /> Confirmar conclusão
-                  </button>
-                )}
-                {isAdmin && r.status === 'concluida' && (
-                  <button
-                    className={`btn btn-ghost btn-block btn-sm ${styles.completeBtn}`}
-                    onClick={() => changeStatus(r, 'em_andamento', null)}
-                  >
-                    <Icon name="undo" size={18} /> Reabrir etapa
-                  </button>
+                {isAdmin && (
+                  <div className={styles.stageActions}>
+                    {r.status === 'pendente' && (
+                      <button
+                        className="btn btn-ghost btn-block btn-sm"
+                        onClick={() => changeStatus(r, 'em_andamento')}
+                      >
+                        <Icon name="play_arrow" size={18} /> Iniciar etapa
+                      </button>
+                    )}
+                    {r.status === 'em_andamento' && (
+                      <>
+                        <button
+                          className="btn btn-primary btn-block btn-sm"
+                          onClick={() => changeStatus(r, 'concluida', new Date().toISOString().slice(0, 10))}
+                        >
+                          <Icon name="check_circle" size={18} /> Confirmar conclusão
+                        </button>
+                        <button
+                          className="btn btn-ghost btn-block btn-sm"
+                          onClick={() => changeStatus(r, 'pausada')}
+                        >
+                          <Icon name="pause" size={18} /> Pausar etapa
+                        </button>
+                      </>
+                    )}
+                    {r.status === 'pausada' && (
+                      <button
+                        className="btn btn-ghost btn-block btn-sm"
+                        onClick={() => changeStatus(r, 'em_andamento')}
+                      >
+                        <Icon name="play_arrow" size={18} /> Retomar etapa
+                      </button>
+                    )}
+                    {r.status === 'concluida' && (
+                      <button
+                        className="btn btn-ghost btn-block btn-sm"
+                        onClick={() => changeStatus(r, 'em_andamento', null)}
+                      >
+                        <Icon name="undo" size={18} /> Reabrir etapa
+                      </button>
+                    )}
+                  </div>
                 )}
               </div>
             )

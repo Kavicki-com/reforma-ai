@@ -5,8 +5,8 @@ import { money, dateBR } from '../lib/format'
 import Spinner from './Spinner'
 import styles from './SummaryList.module.css'
 
-const STATUS_LABEL = { pendente: 'Pendente', em_andamento: 'Em andamento', concluida: 'Concluída' }
-const STATUS_BADGE = { pendente: 'badge-pending', em_andamento: 'badge-info', concluida: 'badge-paid' }
+const STATUS_LABEL = { pendente: 'Pendente', em_andamento: 'Em andamento', pausada: 'Pausada', concluida: 'Concluída' }
+const STATUS_BADGE = { pendente: 'badge-pending', em_andamento: 'badge-info', pausada: 'badge-muted', concluida: 'badge-paid' }
 
 export default function StagesSummary({ projectId }) {
   const [rows, setRows] = useState([])

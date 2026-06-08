@@ -50,11 +50,13 @@
   font-size: .85rem;
   margin: var(--sp-2) 0 var(--sp-5);
 }
-.body h2 {
+/* Prosa dos documentos legais — usada na página (dentro de .body) e nos modais. */
+.prose h2 {
   font-size: 1.1rem;
   margin: var(--sp-5) 0 var(--sp-2);
 }
-.body p {
+.prose h2:first-child { margin-top: 0; }
+.prose p {
   color: var(--text-muted);
   line-height: 1.7;
   font-size: .95rem;

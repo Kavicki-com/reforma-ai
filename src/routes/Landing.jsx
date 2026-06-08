@@ -8,6 +8,7 @@ import CompanyFooter from '../components/CompanyFooter'
 import styles from './Landing.module.css'
 
 const logo = `${import.meta.env.BASE_URL}pwa-192.png`
+const heroPhoto = `${import.meta.env.BASE_URL}hero-architect-update.png`
 
 // Link de cadastro (Login abre direto no modo signup).
 const SIGNUP = '/login?cadastro=1'
@@ -145,31 +146,37 @@ export default function Landing() {
             </p>
           </div>
 
-          {/* Mockup do dashboard em CSS puro */}
-          <div className={styles.mock} aria-hidden="true">
-            <div className={styles.mockHead}>
-              <div>
-                <span className={styles.mockTitle}>Reforma do apê</span>
-                <span className={styles.mockBadge}>Em andamento</span>
+          {/* Foto da arquiteta + card do dashboard (CSS) sobreposto */}
+          <div className={styles.heroMedia}>
+            <img
+              className={styles.heroPhoto}
+              src={heroPhoto}
+              alt="Arquiteta usando o Krovo no canteiro de obras"
+            />
+            <div className={styles.mock} aria-hidden="true">
+              <div className={styles.mockHead}>
+                <div>
+                  <span className={styles.mockTitle}>Reforma do apê</span>
+                  <span className={styles.mockBadge}>Em andamento</span>
+                </div>
               </div>
-              <span className={styles.mockMoney}>R$ 23.480 <em>de R$ 35.000</em></span>
-            </div>
-            <div className={styles.mockBody}>
-              <div className={styles.mockDonut}><span>67%</span></div>
-              <div className={styles.mockBars}>
-                {[['Demolição', 100], ['Elétrica', 80], ['Pintura', 30]].map(([label, v]) => (
-                  <div key={label} className={styles.mockBar}>
-                    <span>{label}</span>
-                    <div className={styles.mockTrack}><div style={{ width: `${v}%` }} /></div>
-                  </div>
-                ))}
+              <div className={styles.mockBody}>
+                <span className={styles.mockPct}>67%</span>
+                <div className={styles.mockBars}>
+                  {[['Demolição', 100], ['Elétrica', 80], ['Pintura', 30]].map(([label, v]) => (
+                    <div key={label} className={styles.mockBar}>
+                      <span>{label}</span>
+                      <div className={styles.mockTrack}><div style={{ width: `${v}%` }} /></div>
+                    </div>
+                  ))}
+                </div>
               </div>
+              <ul className={styles.mockEntries}>
+                <li><Icon name="receipt_long" size={18} /> Cimento CP-II (12 sacos)</li>
+                <li><Icon name="bolt" size={18} /> Eletricista — mão de obra</li>
+                <li><Icon name="format_paint" size={18} /> Tinta acrílica 18L</li>
+              </ul>
             </div>
-            <ul className={styles.mockEntries}>
-              <li><Icon name="receipt_long" size={18} /> Cimento CP-II (12 sacos) <strong>R$ 384,00</strong></li>
-              <li><Icon name="bolt" size={18} /> Eletricista — mão de obra <strong>R$ 1.200,00</strong></li>
-              <li><Icon name="format_paint" size={18} /> Tinta acrílica 18L <strong>R$ 489,90</strong></li>
-            </ul>
           </div>
         </div>
       </section>

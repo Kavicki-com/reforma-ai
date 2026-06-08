@@ -6,13 +6,20 @@
 .linkDanger { background: none; border: none; color: var(--danger); font-weight: 600; padding: 0; }
 .dates { font-size: .82rem; color: var(--text-muted); margin-bottom: var(--sp-2); }
 .money { display: flex; justify-content: space-between; margin-top: var(--sp-2); font-size: .9rem; }
-.completeBtn { margin-top: var(--sp-3); }
 .doneTag { color: var(--success); }
+/* Botões de ação do card, empilhados e fixados no rodapé do card com respiro entre si */
+.stageActions {
+  margin-top: var(--sp-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
 
 /* Grid de cards de etapa */
 .grid { display: grid; grid-template-columns: 1fr; gap: var(--sp-3); }
 .stageCard { display: flex; flex-direction: column; }
-.stageCard .completeBtn { margin-top: auto; padding-top: 0; }
+/* Empurra o bloco de ações para o rodapé, alinhando os cards da linha */
+.stageCard .stageActions { margin-top: auto; }
 
 @media (min-width: 640px) {
   .grid { grid-template-columns: 1fr 1fr; }

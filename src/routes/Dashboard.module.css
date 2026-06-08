@@ -25,6 +25,8 @@
 }
 .iconBtn:active { background: var(--surface-2); }
 .menuBtn { margin-left: -8px; }
+/* Botão de suporte pelo WhatsApp (verde da marca) */
+.whatsBtn { color: #25d366; }
 
 /* Card do donut (etapas concluidas) */
 .donutCard {

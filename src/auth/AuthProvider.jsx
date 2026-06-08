@@ -82,6 +82,15 @@ export function AuthProvider({ children }) {
         email,
         options: { emailRedirectTo: window.location.origin },
       }),
+    // Recuperação de senha: o link volta para a raiz com ?recovery=1. Como o
+    // signup, o PKCE cria a sessão a partir do ?code= e o App captura o marcador
+    // para levar à tela de redefinição. A URL precisa estar nas Redirect URLs.
+    resetPassword: (email) =>
+      supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/?recovery=1`,
+      }),
+    // Define a nova senha (exige a sessão de recuperação já ativa).
+    updatePassword: (password) => supabase.auth.updateUser({ password }),
     signOut: () => supabase.auth.signOut(),
   }
 

@@ -28,9 +28,11 @@ function LegalLayout({ title, children }) {
   )
 }
 
-export function Termos() {
+// Conteúdo (prosa) dos documentos, sem o layout de página — reutilizável tanto
+// nas rotas /termos e /privacidade quanto nos modais da tela de cadastro.
+export function TermosContent() {
   return (
-    <LegalLayout title="Termos de Uso">
+    <div className={styles.prose}>
       <h2>1. Sobre o serviço</h2>
       <p>
         O Krovo é uma plataforma de gestão de obras e reformas que permite registrar
@@ -116,13 +118,13 @@ export function Termos() {
         Estes termos são regidos pela legislação brasileira. Em caso de dúvidas, fale com
         a gente pelo site <a href="https://kavicki.com" target="_blank" rel="noreferrer">kavicki.com</a>.
       </p>
-    </LegalLayout>
+    </div>
   )
 }
 
-export function Privacidade() {
+export function PrivacidadeContent() {
   return (
-    <LegalLayout title="Política de Privacidade">
+    <div className={styles.prose}>
       <h2>1. Dados que coletamos</h2>
       <p>
         Ao criar sua conta coletamos nome, e-mail e endereço. Durante o uso, armazenamos
@@ -187,6 +189,15 @@ export function Privacidade() {
         Esta política pode ser atualizada. Mudanças relevantes serão comunicadas pelo app
         ou por e-mail, com a data de atualização sempre indicada no topo desta página.
       </p>
-    </LegalLayout>
+    </div>
   )
+}
+
+// Páginas completas (rotas /termos e /privacidade).
+export function Termos() {
+  return <LegalLayout title="Termos de Uso"><TermosContent /></LegalLayout>
+}
+
+export function Privacidade() {
+  return <LegalLayout title="Política de Privacidade"><PrivacidadeContent /></LegalLayout>
 }

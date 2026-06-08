@@ -9,6 +9,8 @@ import Sidebar from './components/Sidebar'
 import Spinner from './components/Spinner'
 import Landing from './routes/Landing'
 import Login from './routes/Login'
+import RecuperarSenha from './routes/RecuperarSenha'
+import RedefinirSenha from './routes/RedefinirSenha'
 import ConfirmEmail from './routes/ConfirmEmail'
 import PublicSummary from './routes/PublicSummary'
 import Dashboard from './routes/Dashboard'
@@ -50,7 +52,7 @@ function Gate() {
     const trialEnd = profile?.trial_ends_at ? new Date(profile.trial_ends_at) : null
     const inTrial = trialEnd && trialEnd > new Date()
     const hasAccess = isActive || inTrial
-    const allowed = ['/assinatura', '/conta-confirmada', '/configuracoes', '/termos', '/privacidade'].includes(location.pathname)
+    const allowed = ['/assinatura', '/conta-confirmada', '/configuracoes', '/termos', '/privacidade', '/redefinir-senha'].includes(location.pathname)
     if (!hasAccess && !allowed) navigate('/assinatura', { replace: true })
   }, [loading, subLoading, profile, isActive, location.pathname, navigate])
   return null
@@ -65,7 +67,7 @@ export default function App() {
   const location = useLocation()
   const navigate = useNavigate()
   // rotas de transição (sem sessão "dentro do app")
-  const authRoutes = ['/login', '/confirme-email', '/conta-confirmada', '/termos', '/privacidade']
+  const authRoutes = ['/login', '/recuperar-senha', '/redefinir-senha', '/confirme-email', '/conta-confirmada', '/termos', '/privacidade']
   const inApp = session && !authRoutes.includes(location.pathname)
   const showNav = inApp
   // Landing na raiz pra visitantes: solta a largura do container (página full-bleed).
@@ -95,6 +97,23 @@ export default function App() {
     navigate('/conta-confirmada', { replace: true })
   }, [justConfirmed, loading, navigate])
 
+  // O link de recuperação de senha volta para a raiz com ?recovery=1 (o PKCE cria
+  // a sessão a partir do ?code=). Capturamos o marcador no 1º render e mandamos
+  // para a tela de redefinição, antes de cair no Dashboard/Gate.
+  const [isRecovery] = useState(
+    () => typeof window !== 'undefined' &&
+      new URLSearchParams(window.location.search).get('recovery') === '1',
+  )
+  const recoveryHandled = useRef(false)
+  useEffect(() => {
+    if (recoveryHandled.current || !isRecovery || loading) return
+    recoveryHandled.current = true
+    const u = new URL(window.location.href)
+    u.searchParams.delete('recovery')
+    window.history.replaceState({}, '', u.pathname + u.search + u.hash)
+    navigate('/redefinir-senha', { replace: true })
+  }, [isRecovery, loading, navigate])
+
   return (
     <div className="app-shell">
       {showNav && <Sidebar />}
@@ -106,6 +125,8 @@ export default function App() {
         {projectsPending ? <div className="spinner-wrap"><Spinner /></div> : showOnboarding ? <Onboarding /> : (
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/recuperar-senha" element={<RecuperarSenha />} />
+          <Route path="/redefinir-senha" element={<RedefinirSenha />} />
           <Route path="/confirme-email" element={<ConfirmEmail />} />
           <Route path="/conta-confirmada" element={<ContaConfirmada />} />
           <Route path="/s/:token" element={<PublicSummary />} />

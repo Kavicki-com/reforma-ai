@@ -16,6 +16,7 @@ const logo = `${import.meta.env.BASE_URL}pwa-192.png`
 const STATUS = {
   pendente: { label: 'Pendente', cls: 'badge-pending' },
   em_andamento: { label: 'Em andamento', cls: 'badge-info' },
+  pausada: { label: 'Pausada', cls: 'badge-muted' },
   concluida: { label: 'Concluída', cls: 'badge-paid' },
 }
 
@@ -155,7 +156,7 @@ export default function PublicSummary() {
       <div className={styles.grid}>
         <Stat label="Gasto" value={money(spent)} tone="paid" />
         <Stat label="A pagar" value={money(toPay)} tone="pending" />
-        <Stat label="Gasto estimado" value={money(t.estimated_total)} />
+        <Stat label="Custo estimado" value={money(t.estimated_total)} />
         <div className={`card ${styles.donutCard}`}>
           <Donut value={stagesPct} center={`${stagesPct}%`} size={76} />
           <span className={styles.statLabel}>Etapas concluídas</span>
