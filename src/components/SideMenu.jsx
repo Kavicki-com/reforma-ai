@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/AuthProvider'
 import { navItems } from '../lib/navItems'
 import Icon from './Icon'
@@ -16,6 +16,13 @@ const menuLinks = navItems.filter((l) => l.to === '/orcamento')
 
 export default function SideMenu({ open, onClose }) {
   const { profile, signOut } = useAuth()
+  const navigate = useNavigate()
+
+  async function handleSignOut() {
+    onClose()
+    await signOut()
+    navigate('/login', { replace: true })
+  }
 
   useEffect(() => {
     if (!open) return
@@ -76,7 +83,7 @@ export default function SideMenu({ open, onClose }) {
           />
         </nav>
 
-        <button className={styles.signout} onClick={signOut}>
+        <button className={styles.signout} onClick={handleSignOut}>
           <Icon name="logout" size={20} /> Sair
         </button>
         <CompanyFooter />

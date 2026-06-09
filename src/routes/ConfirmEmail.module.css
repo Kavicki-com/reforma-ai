@@ -33,7 +33,12 @@
   place-items: center;
   color: var(--primary);
   background: var(--primary-soft);
-  margin-bottom: var(--sp-1);
+  margin: 0 auto var(--sp-1);
+}
+/* Glyph como block remove o espaço de baseline do inline-block, centralizando no círculo */
+.iconWrap :global(.material-symbols-rounded) {
+  display: block;
+  line-height: 1;
 }
 .title { font-size: 1.25rem; }
 .card .btn { margin-top: var(--sp-2); }
@@ -54,12 +59,21 @@
   width: 100%;
 }
 .back {
+  display: block;
+  width: 100%;
   margin-top: var(--sp-2);
+  padding: 0;
+  background: none;
+  border: 0;
   color: var(--primary);
+  font: inherit;
   font-weight: 600;
   font-size: .9rem;
+  text-align: center;
   text-decoration: none;
+  cursor: pointer;
 }
+.back:disabled { opacity: .6; cursor: default; }
 .hint {
   text-align: center;
   color: var(--text-muted);

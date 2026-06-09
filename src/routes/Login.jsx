@@ -4,6 +4,7 @@ import { useAuth } from '../auth/AuthProvider'
 import { lookupCep, maskCep } from '../lib/cep'
 import Spinner from '../components/Spinner'
 import CompanyFooter from '../components/CompanyFooter'
+import Icon from '../components/Icon'
 import PasswordInput from '../components/PasswordInput'
 import PasswordStrength from '../components/PasswordStrength'
 import PasswordMatch from '../components/PasswordMatch'
@@ -165,7 +166,7 @@ export default function Login() {
   return (
     <div className={`${styles.wrap} ${wide ? styles.wrap_wide : ''}`}>
       <Link to="/" className={styles.siteLink}>
-        <span className="material-symbols-rounded" aria-hidden="true">arrow_back</span> Ir para o site
+        <Icon name="arrow_back" /> Ir para o site
       </Link>
       <div className={styles.brand}>
         <img className={styles.logo} src={logo} alt="Krovo" />
