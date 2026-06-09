@@ -26,17 +26,21 @@ import { Termos, Privacidade } from './routes/Legal'
 import WelcomeModal from './components/WelcomeModal'
 
 function Protected({ children }) {
-  const { session, loading } = useAuth()
+  const { session, loading, recovery } = useAuth()
   if (loading) return <div className="spinner-wrap"><Spinner /></div>
   // Sem sessão, qualquer rota do app cai na landing (e de lá o visitante entra/cadastra).
   if (!session) return <Navigate to="/" replace />
+  // Sessão de recuperação não dá acesso ao app: só serve para redefinir a senha.
+  if (recovery) return <Navigate to="/redefinir-senha" replace />
   return children
 }
 
 // Raiz: visitante vê a landing; logado vê o Dashboard.
 function Home() {
-  const { session, loading } = useAuth()
+  const { session, loading, recovery } = useAuth()
   if (loading) return <div className="spinner-wrap"><Spinner /></div>
+  // Durante a recuperação, a raiz não abre o Dashboard — força a redefinição.
+  if (recovery) return <Navigate to="/redefinir-senha" replace />
   return session ? <Dashboard /> : <Landing />
 }
 
@@ -62,13 +66,13 @@ function Gate() {
 const obraRoutes = ['/', '/lancamentos', '/etapas', '/orcamento', '/materiais', '/fotos']
 
 export default function App() {
-  const { session, loading } = useAuth()
+  const { session, loading, recovery, beginRecovery } = useAuth()
   const { needsOnboarding, loading: projectsLoading } = useProjects()
   const location = useLocation()
   const navigate = useNavigate()
   // rotas de transição (sem sessão "dentro do app")
   const authRoutes = ['/login', '/recuperar-senha', '/redefinir-senha', '/confirme-email', '/conta-confirmada', '/termos', '/privacidade']
-  const inApp = session && !authRoutes.includes(location.pathname)
+  const inApp = session && !recovery && !authRoutes.includes(location.pathname)
   const showNav = inApp
   // Landing na raiz pra visitantes: solta a largura do container (página full-bleed).
   const isLanding = !loading && !session && location.pathname === '/'
@@ -108,11 +112,23 @@ export default function App() {
   useEffect(() => {
     if (recoveryHandled.current || !isRecovery || loading) return
     recoveryHandled.current = true
+    // Marca a sessão como de recuperação (persistido) ANTES de navegar — assim,
+    // mesmo após fechar/reabrir o app, ela não vira um login normal.
+    beginRecovery()
     const u = new URL(window.location.href)
     u.searchParams.delete('recovery')
     window.history.replaceState({}, '', u.pathname + u.search + u.hash)
     navigate('/redefinir-senha', { replace: true })
-  }, [isRecovery, loading, navigate])
+  }, [isRecovery, loading, navigate, beginRecovery])
+
+  // Trava de segurança: enquanto a recuperação estiver pendente, qualquer rota
+  // (reabrir o app, "Entrar", URL manual) volta para a redefinição de senha.
+  useEffect(() => {
+    if (loading || !recovery) return
+    if (location.pathname !== '/redefinir-senha') {
+      navigate('/redefinir-senha', { replace: true })
+    }
+  }, [recovery, loading, location.pathname, navigate])
 
   return (
     <div className="app-shell">

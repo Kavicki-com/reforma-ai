@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/AuthProvider'
 import { navItems as links } from '../lib/navItems'
 import Icon from './Icon'
@@ -12,6 +12,12 @@ const logo = `${import.meta.env.BASE_URL}pwa-192.png`
 // Navegação persistente — visível apenas no desktop (controlado por CSS)
 export default function Sidebar() {
   const { profile, signOut } = useAuth()
+  const navigate = useNavigate()
+
+  async function handleSignOut() {
+    await signOut()
+    navigate('/login', { replace: true })
+  }
 
   return (
     <aside className={styles.sidebar}>
@@ -53,7 +59,7 @@ export default function Sidebar() {
 
       <div className={styles.footer}>
         <InstallButton className={styles.install} />
-        <button className={styles.signout} onClick={signOut}>
+        <button className={styles.signout} onClick={handleSignOut}>
           <Icon name="logout" size={20} /> Sair
         </button>
         <CompanyFooter />

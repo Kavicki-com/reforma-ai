@@ -47,6 +47,14 @@ export default function RedefinirSenha() {
     setTimeout(() => navigate('/login', { replace: true }), 1800)
   }
 
+  // Desistir da recuperação: encerra a sessão (limpa o marcador) e volta ao login.
+  // Sem isso o usuário ficaria preso nesta tela, já que a sessão de recuperação
+  // não dá acesso ao restante do app.
+  async function onCancel() {
+    await signOut()
+    navigate('/login', { replace: true })
+  }
+
   return (
     <div className={styles.wrap}>
       <div className={styles.brand}>
@@ -94,6 +102,9 @@ export default function RedefinirSenha() {
             {err && <p className={styles.error}>{err}</p>}
             <button className="btn btn-primary btn-block" disabled={busy}>
               {busy ? <Spinner small /> : 'Salvar nova senha'}
+            </button>
+            <button type="button" className={styles.back} onClick={onCancel} disabled={busy}>
+              Cancelar
             </button>
           </form>
         )}

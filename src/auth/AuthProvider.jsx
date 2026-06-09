@@ -3,10 +3,40 @@ import { supabase } from '../lib/supabase'
 
 const AuthContext = createContext(null)
 
+// Marca que a sessão atual é de recuperação de senha. O link do e-mail cria uma
+// sessão real e persistida; sem este marcador, fechar/reabrir o app ou ir em
+// "Entrar" usaria essa sessão como login normal — sem ter trocado a senha.
+// Persistimos em localStorage porque o evento do Supabase só dispara uma vez
+// (e o app detecta a recuperação pelo marcador ?recovery=1, não pelo evento).
+const RECOVERY_KEY = 'krovo:pwd-recovery'
+// Lê o estado de recuperação de forma SÍNCRONA já no 1º render. Se a URL traz
+// ?recovery=1 (link do e-mail), persiste na hora — assim o guard redireciona
+// antes de qualquer render do Dashboard (sem o "flash"), e reabrir/outra aba
+// continua travado pelo localStorage.
+const readRecovery = () => {
+  try {
+    if (new URLSearchParams(window.location.search).get('recovery') === '1') {
+      localStorage.setItem(RECOVERY_KEY, '1')
+      return true
+    }
+    return localStorage.getItem(RECOVERY_KEY) === '1'
+  } catch { return false }
+}
+
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null)
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [recovery, setRecovery] = useState(readRecovery)
+
+  const beginRecovery = () => {
+    try { localStorage.setItem(RECOVERY_KEY, '1') } catch { /* ignore */ }
+    setRecovery(true)
+  }
+  const endRecovery = () => {
+    try { localStorage.removeItem(RECOVERY_KEY) } catch { /* ignore */ }
+    setRecovery(false)
+  }
   // Guarda para qual usuario o profile ja foi carregado — evita recarregar
   // (e desmontar telas/formularios) quando a aba reganha foco e o Supabase
   // dispara TOKEN_REFRESHED / SIGNED_IN com o mesmo usuario.
@@ -63,7 +93,17 @@ export function AuthProvider({ children }) {
     profile,
     isAdmin: profile?.role === 'admin',
     loading,
-    signIn: (email, password) => supabase.auth.signInWithPassword({ email, password }),
+    // Sessão de recuperação ativa: o app deve travar tudo na tela de redefinição
+    // até a senha ser trocada (ou o usuário cancelar/sair).
+    recovery,
+    beginRecovery,
+    endRecovery,
+    signIn: async (email, password) => {
+      const res = await supabase.auth.signInWithPassword({ email, password })
+      // Login normal bem-sucedido encerra qualquer estado de recuperação pendente.
+      if (!res.error) endRecovery()
+      return res
+    },
     signUp: (email, password, fullName, meta = {}) =>
       supabase.auth.signUp({
         email,
@@ -90,8 +130,16 @@ export function AuthProvider({ children }) {
         redirectTo: `${window.location.origin}/?recovery=1`,
       }),
     // Define a nova senha (exige a sessão de recuperação já ativa).
-    updatePassword: (password) => supabase.auth.updateUser({ password }),
-    signOut: () => supabase.auth.signOut(),
+    updatePassword: async (password) => {
+      const res = await supabase.auth.updateUser({ password })
+      if (!res.error) endRecovery()
+      return res
+    },
+    signOut: () => {
+      // Cancelar/sair durante a recuperação também limpa o marcador.
+      endRecovery()
+      return supabase.auth.signOut()
+    },
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
