@@ -1,0 +1,23 @@
+# Configuração das Edge Functions (espelha o que está no painel do Supabase).
+# Projeto de produção: xvimjfaetxfziwtqwmnf (Krovo).
+project_id = "xvimjfaetxfziwtqwmnf"
+
+[functions.extract-invoice]
+verify_jwt = true
+
+[functions.mp-subscribe-card]
+verify_jwt = true
+
+[functions.mp-pay-once]
+verify_jwt = true
+
+[functions.mp-manage-subscription]
+verify_jwt = true
+
+[functions.delete-account]
+verify_jwt = true
+
+# O webhook do Mercado Pago não recebe JWT do Supabase: a autenticidade é
+# validada pela assinatura HMAC (x-signature) dentro da própria function.
+[functions.mp-webhook]
+verify_jwt = false

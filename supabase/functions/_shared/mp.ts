@@ -7,6 +7,24 @@ export const corsHeaders = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 }
 
+// CORS restrito: reflete a Origin apenas se for o app (prod) ou dev local.
+// Origins fora da lista recebem o origin de produção (o navegador bloqueia).
+export function appOrigin(): string {
+  const raw = env("APP_URL") || "https://krovo.kavicki.com"
+  try { return new URL(raw).origin } catch { return "https://krovo.kavicki.com" }
+}
+
+export function corsHeadersFor(req: Request) {
+  const allowed = new Set([appOrigin(), "http://localhost:5173", "http://localhost:4173"])
+  const origin = req.headers.get("Origin") || ""
+  return {
+    "Access-Control-Allow-Origin": allowed.has(origin) ? origin : appOrigin(),
+    "Vary": "Origin",
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+  }
+}
+
 export function json(obj: unknown, status = 200) {
   return new Response(JSON.stringify(obj), {
     status,
