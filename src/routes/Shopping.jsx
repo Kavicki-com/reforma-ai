@@ -184,6 +184,7 @@ export default function Shopping() {
         <>
           <button
             type="button"
+            id="compras-importar-nota"
             className={styles.aiBtn}
             onClick={() => aiInputRef.current?.click()}
             disabled={analyzing}
@@ -253,7 +254,7 @@ export default function Shopping() {
                 <option value="comprado">Comprado</option>
               </select>
             </div>
-            <button className="btn btn-primary btn-block" disabled={saving}>
+            <button id="compras-salvar" className="btn btn-primary btn-block" disabled={saving}>
               {saving ? <Spinner small /> : 'Salvar'}
             </button>
           </form>
@@ -287,7 +288,7 @@ export default function Shopping() {
                 </div>
               </div>
             ))}
-            <button className="btn btn-primary btn-block" onClick={confirmReview} disabled={saving || !reviewItems.length}>
+            <button id="compras-confirmar-revisao" className="btn btn-primary btn-block" onClick={confirmReview} disabled={saving || !reviewItems.length}>
               {saving ? <Spinner small /> : `Salvar ${reviewItems.length} item(ns) como comprados`}
             </button>
           </div>
@@ -295,7 +296,7 @@ export default function Shopping() {
       )}
 
       {isAdmin && (
-        <button className="btn-fab" aria-label="Novo material" onClick={startNew}>
+        <button id="compras-novo" className="btn-fab" aria-label="Novo material" onClick={startNew}>
           <Icon name="add" size={28} />
         </button>
       )}

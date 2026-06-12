@@ -98,7 +98,7 @@ export default function Landing() {
   return (
     <div className={styles.landing}>
       {/* ===== Barra de anúncio (Coldture) ===== */}
-      <Link to={SIGNUP} className={styles.announce}>
+      <Link to={SIGNUP} id="lp-topo-trial" className={styles.announce}>
         <Icon name="celebration" size={16} /> {trialDays} dias grátis — teste sem cartão de crédito
       </Link>
 
@@ -109,14 +109,14 @@ export default function Landing() {
             <img src={logo} alt="" /> <span>Krovo</span>
           </a>
           <nav className={styles.navLinks}>
-            <button onClick={() => scrollTo('recursos')}>Recursos</button>
-            <button onClick={() => scrollTo('como-funciona')}>Como funciona</button>
-            <button onClick={() => scrollTo('planos')}>Planos</button>
-            <button onClick={() => scrollTo('duvidas')}>Dúvidas</button>
+            <button id="lp-nav-recursos" onClick={() => scrollTo('recursos')}>Recursos</button>
+            <button id="lp-nav-como-funciona" onClick={() => scrollTo('como-funciona')}>Como funciona</button>
+            <button id="lp-nav-planos" onClick={() => scrollTo('planos')}>Planos</button>
+            <button id="lp-nav-duvidas" onClick={() => scrollTo('duvidas')}>Dúvidas</button>
           </nav>
           <div className={styles.navActions}>
-            <Link to="/login" className={styles.navLogin}>Entrar</Link>
-            <Link to={SIGNUP} className={styles.navCta}>Começar grátis</Link>
+            <Link to="/login" id="lp-nav-entrar" className={styles.navLogin}>Entrar</Link>
+            <Link to={SIGNUP} id="lp-nav-comecar-gratis" className={styles.navCta}>Começar grátis</Link>
           </div>
         </div>
       </header>
@@ -134,10 +134,10 @@ export default function Landing() {
               exatamente pra onde foi cada real.
             </p>
             <div className={styles.heroCtas}>
-              <Link to={SIGNUP} className={styles.ctaPrimary}>
+              <Link to={SIGNUP} id="lp-hero-comecar-gratis" className={styles.ctaPrimary}>
                 Começar grátis <Icon name="arrow_forward" size={20} />
               </Link>
-              <button className={styles.ctaGhost} onClick={() => scrollTo('como-funciona')}>
+              <button id="lp-hero-ver-como-funciona" className={styles.ctaGhost} onClick={() => scrollTo('como-funciona')}>
                 Ver como funciona
               </button>
             </div>
@@ -227,7 +227,7 @@ export default function Landing() {
               itens, os valores e o total, e cria o lançamento pra você só revisar
               e salvar. O caderninho de obra acabou de se aposentar.
             </p>
-            <Link to={SIGNUP} className={styles.ctaPrimary}>
+            <Link to={SIGNUP} id="lp-ia-testar-leitura-nota" className={styles.ctaPrimary}>
               Testar leitura de nota <Icon name="arrow_forward" size={20} />
             </Link>
           </div>
@@ -311,7 +311,7 @@ export default function Landing() {
                   <li><Icon name="check_circle" size={18} /> Resumo público pra compartilhar</li>
                   <li><Icon name="check_circle" size={18} /> Cancele quando quiser</li>
                 </ul>
-                <Link to={SIGNUP} className={isYear ? styles.ctaPrimary : styles.ctaOutline}>
+                <Link to={SIGNUP} id={`lp-plano-${p.billing_period}`} className={isYear ? styles.ctaPrimary : styles.ctaOutline}>
                   Começar {p.trial_days ?? trialDays} dias grátis
                 </Link>
               </div>
@@ -342,7 +342,7 @@ export default function Landing() {
         <div className={`${styles.finalCta} ${styles.reveal}`}>
           <h2>Ainda anotando a obra no caderninho?</h2>
           <p>Crie sua conta agora e organize sua reforma ainda hoje. {trialDays} dias grátis, sem cartão.</p>
-          <Link to={SIGNUP} className={styles.ctaInverse}>
+          <Link to={SIGNUP} id="lp-final-comecar-gratis" className={styles.ctaInverse}>
             Começar grátis <Icon name="arrow_forward" size={20} />
           </Link>
         </div>
@@ -355,13 +355,13 @@ export default function Landing() {
           <p className="muted">Sua obra na mão.</p>
         </div>
         <nav className={styles.footerLinks}>
-          <button onClick={() => scrollTo('recursos')}>Recursos</button>
-          <button onClick={() => scrollTo('como-funciona')}>Como funciona</button>
-          <button onClick={() => scrollTo('planos')}>Planos</button>
-          <button onClick={() => scrollTo('duvidas')}>Dúvidas</button>
-          <Link to="/login">Entrar</Link>
-          <Link to="/termos">Termos de Uso</Link>
-          <Link to="/privacidade">Política de Privacidade</Link>
+          <button id="lp-footer-recursos" onClick={() => scrollTo('recursos')}>Recursos</button>
+          <button id="lp-footer-como-funciona" onClick={() => scrollTo('como-funciona')}>Como funciona</button>
+          <button id="lp-footer-planos" onClick={() => scrollTo('planos')}>Planos</button>
+          <button id="lp-footer-duvidas" onClick={() => scrollTo('duvidas')}>Dúvidas</button>
+          <Link to="/login" id="lp-footer-entrar">Entrar</Link>
+          <Link to="/termos" id="lp-footer-termos">Termos de Uso</Link>
+          <Link to="/privacidade" id="lp-footer-privacidade">Política de Privacidade</Link>
         </nav>
         <CompanyFooter />
       </footer>

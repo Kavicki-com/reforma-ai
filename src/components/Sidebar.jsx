@@ -36,6 +36,7 @@ export default function Sidebar() {
         {links.map((l) => (
           <NavLink
             key={l.to}
+            id={`sidebar-${l.to === '/' ? 'inicio' : l.to.slice(1)}`}
             to={l.to}
             end={l.end}
             className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
@@ -45,12 +46,14 @@ export default function Sidebar() {
         ))}
         <NavLink
           to="/assinatura"
+          id="sidebar-assinatura"
           className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
         >
           <Icon name="credit_card" size={22} /> Assinatura
         </NavLink>
         <NavLink
           to="/configuracoes"
+          id="sidebar-configuracoes"
           className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
         >
           <Icon name="settings" size={22} /> Configurações
@@ -58,8 +61,8 @@ export default function Sidebar() {
       </nav>
 
       <div className={styles.footer}>
-        <InstallButton className={styles.install} />
-        <button className={styles.signout} onClick={handleSignOut}>
+        <InstallButton id="sidebar-instalar-app" className={styles.install} />
+        <button id="sidebar-sair" className={styles.signout} onClick={handleSignOut}>
           <Icon name="logout" size={20} /> Sair
         </button>
         <CompanyFooter />

@@ -71,11 +71,11 @@ export default function Budget() {
           </div>
           {isAdmin && (
             editingBudget ? (
-              <button className="btn btn-primary" onClick={saveBudget} disabled={saving}>
+              <button id="orcamento-salvar" className="btn btn-primary" onClick={saveBudget} disabled={saving}>
                 {saving ? <Spinner small /> : 'Salvar'}
               </button>
             ) : (
-              <button className="btn btn-ghost" onClick={() => setEditingBudget(true)}>Definir</button>
+              <button id="orcamento-definir" className="btn btn-ghost" onClick={() => setEditingBudget(true)}>Definir</button>
             )
           )}
         </div>

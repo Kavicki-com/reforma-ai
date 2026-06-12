@@ -43,7 +43,7 @@ export default function Onboarding() {
               onChange={(e) => setForm({ ...form, budget_total: e.target.value })} />
           </div>
           {error && <p className={styles.error}>{error}</p>}
-          <button className="btn btn-primary btn-block" disabled={saving}>
+          <button id="onboarding-criar-obra" className="btn btn-primary btn-block" disabled={saving}>
             {saving ? <Spinner small /> : 'Criar obra'}
           </button>
         </form>

@@ -133,12 +133,12 @@ function ActiveSubscription({ subscription, refresh, setToast }) {
           <div className={styles.detailRow}>
             <Icon name="credit_card" size={20} className={styles.detIcon} />
             <span>{subscription.card_last4 ? `Cartão •••• ${subscription.card_last4}` : 'Cartão cadastrado'}</span>
-            <button className={styles.linkBtn} onClick={() => { setError(''); setSheet('card') }}>Alterar</button>
+            <button id="assinatura-alterar-cartao" className={styles.linkBtn} onClick={() => { setError(''); setSheet('card') }}>Alterar</button>
           </div>
         )}
 
         {recurring && (
-          <button className={`btn btn-danger btn-block ${styles.cancelBtn}`} onClick={() => { setError(''); setSheet('cancel') }}>
+          <button id="assinatura-cancelar" className={`btn btn-danger btn-block ${styles.cancelBtn}`} onClick={() => { setError(''); setSheet('cancel') }}>
             Cancelar assinatura
           </button>
         )}
@@ -165,10 +165,10 @@ function ActiveSubscription({ subscription, refresh, setToast }) {
         <p className="muted" style={{ marginBottom: 'var(--sp-4)' }}>
           Tem certeza? Você perde o acesso aos recursos pagos ao fim do período já pago.
         </p>
-        <button className="btn btn-danger btn-block" disabled={busy} onClick={() => manage({ action: 'cancel' }, 'Assinatura cancelada.')}>
+        <button id="assinatura-cancelar-confirmar" className="btn btn-danger btn-block" disabled={busy} onClick={() => manage({ action: 'cancel' }, 'Assinatura cancelada.')}>
           {busy ? <Spinner small /> : 'Sim, cancelar'}
         </button>
-        <button className="btn btn-block" disabled={busy} style={{ marginTop: 'var(--sp-2)' }} onClick={() => setSheet(null)}>
+        <button id="assinatura-cancelar-voltar" className="btn btn-block" disabled={busy} style={{ marginTop: 'var(--sp-2)' }} onClick={() => setSheet(null)}>
           Voltar
         </button>
       </BottomSheet>

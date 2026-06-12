@@ -70,7 +70,7 @@ export default function RecuperarSenha() {
                 value={email} onChange={(e) => setEmail(e.target.value)} required />
             </div>
             {err && <p className={styles.error}>{err}</p>}
-            <button className="btn btn-primary btn-block" disabled={busy}>
+            <button id="recuperar-senha-enviar" className="btn btn-primary btn-block" disabled={busy}>
               {busy ? <Spinner small /> : 'Enviar link'}
             </button>
             <Link to="/login" className={styles.back}>Voltar para entrar</Link>

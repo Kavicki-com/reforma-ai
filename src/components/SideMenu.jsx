@@ -55,6 +55,7 @@ export default function SideMenu({ open, onClose }) {
           {menuLinks.map((l) => (
             <NavLink
               key={l.to}
+              id={`menu-${l.to === '/' ? 'inicio' : l.to.slice(1)}`}
               to={l.to}
               end={l.end}
               onClick={onClose}
@@ -65,6 +66,7 @@ export default function SideMenu({ open, onClose }) {
           ))}
           <NavLink
             to="/assinatura"
+            id="menu-assinatura"
             onClick={onClose}
             className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
           >
@@ -72,18 +74,20 @@ export default function SideMenu({ open, onClose }) {
           </NavLink>
           <NavLink
             to="/configuracoes"
+            id="menu-configuracoes"
             onClick={onClose}
             className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
           >
             <Icon name="settings" size={22} /> Configurações
           </NavLink>
           <InstallButton
+            id="menu-instalar-app"
             className={styles.link}
             onAfter={(r) => { if (r === 'installed' || r === 'dismissed') onClose() }}
           />
         </nav>
 
-        <button className={styles.signout} onClick={handleSignOut}>
+        <button id="menu-sair" className={styles.signout} onClick={handleSignOut}>
           <Icon name="logout" size={20} /> Sair
         </button>
         <CompanyFooter />

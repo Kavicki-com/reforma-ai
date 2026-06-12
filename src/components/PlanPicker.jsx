@@ -66,6 +66,7 @@ export default function PlanPicker({ value, onChange }) {
           <button
             type="button"
             key={p.code}
+            id={`checkout-plano-${p.billing_period}`}
             data-code={p.code}
             className={`${styles.plan} ${selected ? styles.selected : ''}`}
             onClick={() => onChange?.(p.code)}

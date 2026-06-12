@@ -9,7 +9,7 @@ import styles from './InstallButton.module.css'
 //   configurações do navegador).
 // - iPhone/iPad ou navegadores sem suporte: abre um passo a passo visual.
 // Some sozinho quando o app já está instalado.
-export default function InstallButton({ className, label = 'Instalar app', iconSize = 22, onAfter }) {
+export default function InstallButton({ id, className, label = 'Instalar app', iconSize = 22, onAfter }) {
   const { installed, promptInstall } = useInstallPrompt()
   const [sheet, setSheet] = useState(null) // null | 'ios' | 'generic'
 
@@ -24,7 +24,7 @@ export default function InstallButton({ className, label = 'Instalar app', iconS
 
   return (
     <>
-      <button type="button" className={className} onClick={handleClick}>
+      <button type="button" id={id} className={className} onClick={handleClick}>
         <Icon name="install_mobile" size={iconSize} /> {label}
       </button>
 

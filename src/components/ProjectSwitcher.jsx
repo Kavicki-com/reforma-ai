@@ -92,7 +92,7 @@ export default function ProjectSwitcher({ onNavigate }) {
 
   return (
     <>
-      <button type="button" className={styles.trigger} onClick={() => setOpen(true)} aria-label="Trocar de obra">
+      <button type="button" id="obras-trocar" className={styles.trigger} onClick={() => setOpen(true)} aria-label="Trocar de obra">
         <Icon name="domain" size={20} className={styles.triggerIcon} />
         <span className={styles.triggerName}>{activeProject?.name || 'Selecionar obra'}</span>
         <Icon name="unfold_more" size={18} className={styles.triggerChevron} />
@@ -112,10 +112,10 @@ export default function ProjectSwitcher({ onNavigate }) {
                 onChange={(e) => setForm({ ...form, budget_total: e.target.value })} />
             </div>
             {error && <p className={styles.error}>{error}</p>}
-            <button className="btn btn-primary btn-block" disabled={saving}>
+            <button id="obras-criar-salvar" className="btn btn-primary btn-block" disabled={saving}>
               {saving ? <Spinner small /> : 'Criar obra'}
             </button>
-            <button type="button" className="btn btn-ghost btn-block" onClick={() => { setCreating(false); setError('') }}>
+            <button type="button" id="obras-criar-voltar" className="btn btn-ghost btn-block" onClick={() => { setCreating(false); setError('') }}>
               Cancelar
             </button>
           </form>
@@ -131,6 +131,7 @@ export default function ProjectSwitcher({ onNavigate }) {
             <div className={styles.filters}>
               {FILTERS.map((f) => (
                 <button key={f.key} type="button"
+                  id={`obras-filtro-${f.key}`}
                   className={`${styles.chip} ${filter === f.key ? styles.chipActive : ''}`}
                   onClick={() => setFilter(f.key)}>
                   {f.label}
@@ -171,7 +172,7 @@ export default function ProjectSwitcher({ onNavigate }) {
             )}
 
             {canCreate ? (
-              <button type="button" className="btn btn-primary btn-block" onClick={() => setCreating(true)}>
+              <button type="button" id="obras-nova" className="btn btn-primary btn-block" onClick={() => setCreating(true)}>
                 <Icon name="add" size={20} /> Nova obra
               </button>
             ) : (

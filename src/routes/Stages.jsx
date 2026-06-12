@@ -179,7 +179,7 @@ export default function Stages() {
       )}
 
       {isAdmin && (
-        <button className="btn-fab" aria-label="Nova etapa" onClick={startNew}>
+        <button id="etapas-nova" className="btn-fab" aria-label="Nova etapa" onClick={startNew}>
           <Icon name="add" size={28} />
         </button>
       )}
@@ -222,7 +222,7 @@ export default function Stages() {
                   onChange={(e) => setForm({ ...form, end_date: e.target.value })} />
               </div>
             </div>
-            <button className="btn btn-primary btn-block" disabled={saving}>
+            <button id="etapas-salvar" className="btn btn-primary btn-block" disabled={saving}>
               {saving ? <Spinner small /> : 'Salvar'}
             </button>
           </form>

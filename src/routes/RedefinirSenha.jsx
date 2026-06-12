@@ -100,10 +100,10 @@ export default function RedefinirSenha() {
               <PasswordMatch value={password} confirm={password2} />
             </div>
             {err && <p className={styles.error}>{err}</p>}
-            <button className="btn btn-primary btn-block" disabled={busy}>
+            <button id="redefinir-senha-salvar" className="btn btn-primary btn-block" disabled={busy}>
               {busy ? <Spinner small /> : 'Salvar nova senha'}
             </button>
-            <button type="button" className={styles.back} onClick={onCancel} disabled={busy}>
+            <button type="button" id="redefinir-senha-voltar" className={styles.back} onClick={onCancel} disabled={busy}>
               Cancelar
             </button>
           </form>

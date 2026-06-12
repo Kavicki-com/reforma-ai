@@ -147,7 +147,7 @@ export default function Photos() {
       )}
 
       {isAdmin && (
-        <label className="btn-fab" aria-label="Nova foto">
+        <label id="fotos-adicionar" className="btn-fab" aria-label="Nova foto">
           {uploading ? <Spinner small /> : <Icon name="add_a_photo" size={26} />}
           <input type="file" accept="image/*" multiple hidden onChange={onUpload} disabled={uploading} />
         </label>

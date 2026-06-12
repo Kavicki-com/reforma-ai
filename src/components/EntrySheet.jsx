@@ -295,11 +295,11 @@ export default function EntrySheet({ open, entryId, onClose, onSaved }) {
 
           {error && <p className={styles.error}>{error}</p>}
 
-          <button className="btn btn-primary btn-block" disabled={saving}>
+          <button id="lancamento-salvar" className="btn btn-primary btn-block" disabled={saving}>
             {saving ? <Spinner small /> : 'Salvar'}
           </button>
           {editing && (
-            <button type="button" className="btn btn-danger btn-block" onClick={onDelete} disabled={saving}>
+            <button type="button" id="lancamento-excluir" className="btn btn-danger btn-block" onClick={onDelete} disabled={saving}>
               Excluir lançamento
             </button>
           )}

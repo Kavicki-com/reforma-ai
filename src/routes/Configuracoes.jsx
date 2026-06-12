@@ -135,7 +135,7 @@ function ProfileSection({ userId, setToast }) {
           <input className="input" maxLength={2} value={addr.uf} onChange={(e) => setField('uf', e.target.value.toUpperCase())} />
         </div>
       </div>
-      <button className="btn btn-primary btn-block" disabled={busy}>{busy ? <Spinner small /> : 'Salvar'}</button>
+      <button id="config-salvar-perfil" className="btn btn-primary btn-block" disabled={busy}>{busy ? <Spinner small /> : 'Salvar'}</button>
     </form>
   )
 }
@@ -174,7 +174,7 @@ function PasswordSection({ setToast }) {
         <PasswordInput value={pw2} onChange={(e) => setPw2(e.target.value)} autoComplete="new-password" required />
         <PasswordMatch value={pw} confirm={pw2} />
       </div>
-      <button className="btn btn-primary btn-block" disabled={busy}>{busy ? <Spinner small /> : 'Alterar senha'}</button>
+      <button id="config-alterar-senha" className="btn btn-primary btn-block" disabled={busy}>{busy ? <Spinner small /> : 'Alterar senha'}</button>
     </form>
   )
 }
@@ -202,17 +202,17 @@ function DangerSection({ signOut, navigate }) {
     <div className={`card ${styles.card} ${styles.danger}`}>
       <h2 className={styles.cardTitle}>Excluir conta</h2>
       <p className="muted">Esta ação é permanente e remove sua obra, dados e assinatura. Não dá pra desfazer.</p>
-      <button className="btn btn-danger btn-block" onClick={() => { setError(''); setOpen(true) }}>Excluir minha conta</button>
+      <button id="config-excluir-conta" className="btn btn-danger btn-block" onClick={() => { setError(''); setOpen(true) }}>Excluir minha conta</button>
 
       <BottomSheet open={open} title="Excluir conta" onClose={() => !busy && setOpen(false)}>
         {error && <p className={styles.error}>{error}</p>}
         <p className="muted" style={{ marginBottom: 'var(--sp-4)' }}>
           Tem certeza? Tudo será apagado permanentemente: sua obra, lançamentos, fotos e assinatura.
         </p>
-        <button className="btn btn-danger btn-block" disabled={busy} onClick={remove}>
+        <button id="config-excluir-confirmar" className="btn btn-danger btn-block" disabled={busy} onClick={remove}>
           {busy ? <Spinner small /> : 'Sim, excluir tudo'}
         </button>
-        <button className="btn btn-block" disabled={busy} style={{ marginTop: 'var(--sp-2)' }} onClick={() => setOpen(false)}>
+        <button id="config-excluir-voltar" className="btn btn-block" disabled={busy} style={{ marginTop: 'var(--sp-2)' }} onClick={() => setOpen(false)}>
           Cancelar
         </button>
       </BottomSheet>

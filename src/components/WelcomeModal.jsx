@@ -45,8 +45,8 @@ export default function WelcomeModal() {
           sem precisar de cartão. Quando quiser, assine pra continuar com tudo liberado.
         </p>
 
-        <button className="btn btn-primary btn-block" onClick={subscribe}>Assinar agora</button>
-        <button className="btn btn-block" onClick={dismiss}>Explorar primeiro</button>
+        <button id="welcome-assinar-agora" className="btn btn-primary btn-block" onClick={subscribe}>Assinar agora</button>
+        <button id="welcome-explorar-primeiro" className="btn btn-block" onClick={dismiss}>Explorar primeiro</button>
       </div>
     </div>
   )

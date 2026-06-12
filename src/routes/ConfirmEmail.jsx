@@ -59,7 +59,7 @@ export default function ConfirmEmail() {
         {err && <p className={styles.error}>{err}</p>}
 
         {email && (
-          <button className="btn btn-ghost btn-block" onClick={resend} disabled={busy}>
+          <button id="confirmar-email-reenviar" className="btn btn-ghost btn-block" onClick={resend} disabled={busy}>
             {busy ? <Spinner small /> : 'Reenviar e-mail'}
           </button>
         )}

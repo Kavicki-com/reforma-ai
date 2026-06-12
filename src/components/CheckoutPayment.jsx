@@ -53,6 +53,7 @@ export default function CheckoutPayment({ planCode, onSuccess }) {
           <button
             type="button"
             key={m.id}
+            id={`checkout-metodo-${m.id}`}
             className={`${styles.method} ${method === m.id ? styles.active : ''}`}
             onClick={() => { setMethod(m.id); setError('') }}
           >
@@ -165,6 +166,7 @@ function PixBoletoForm({ method, email, busy, setBusy, setError, pix, setPix, bo
         <p className="muted">Escaneie o QR Code ou copie o código abaixo. A confirmação é automática.</p>
         <button
           type="button"
+          id="checkout-copiar-pix"
           className="btn btn-block"
           onClick={() => { navigator.clipboard?.writeText(pix.qrCode); setCopied(true) }}
         >
@@ -180,7 +182,7 @@ function PixBoletoForm({ method, email, busy, setBusy, setError, pix, setPix, bo
       <div className={styles.result}>
         <p className="muted">Boleto gerado. A confirmação pode levar até 1 dia útil.</p>
         {boleto.url && (
-          <a className="btn btn-primary btn-block" href={boleto.url} target="_blank" rel="noreferrer">
+          <a id="checkout-abrir-boleto" className="btn btn-primary btn-block" href={boleto.url} target="_blank" rel="noreferrer">
             <Icon name="open_in_new" size={18} /> Abrir boleto
           </a>
         )}
@@ -201,7 +203,7 @@ function PixBoletoForm({ method, email, busy, setBusy, setError, pix, setPix, bo
         <input className="input" inputMode="numeric" placeholder="000.000.000-00"
           value={maskCpf(cpf)} onChange={(e) => setCpf(e.target.value.replace(/\D/g, ''))} required />
       </div>
-      <button className="btn btn-primary btn-block" disabled={busy}>
+      <button id={method === 'pix' ? 'checkout-gerar-pix' : 'checkout-gerar-boleto'} className="btn btn-primary btn-block" disabled={busy}>
         {busy ? <Spinner small /> : method === 'pix' ? 'Gerar PIX' : 'Gerar boleto'}
       </button>
     </form>

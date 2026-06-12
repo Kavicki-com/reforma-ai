@@ -83,7 +83,7 @@ export default function CardTokenForm({ submitLabel = 'Confirmar', onToken, busy
         <input className="input" inputMode="numeric" placeholder="000.000.000-00"
           value={maskCpf(cpf)} onChange={(e) => setCpf(e.target.value.replace(/\D/g, ''))} required />
       </div>
-      <button className="btn btn-primary btn-block" disabled={busy || !ready}>
+      <button id="checkout-assinar-cartao" className="btn btn-primary btn-block" disabled={busy || !ready}>
         {busy ? <Spinner small /> : submitLabel}
       </button>
     </form>

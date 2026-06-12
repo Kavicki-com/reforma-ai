@@ -74,6 +74,7 @@ export default function Entries() {
         {FILTERS.map((f) => (
           <button
             key={f.key}
+            id={`lancamentos-filtro-${f.key}`}
             className={`${styles.chip} ${filter === f.key ? styles.chipActive : ''}`}
             onClick={() => setFilter(f.key)}
           >
@@ -129,7 +130,7 @@ export default function Entries() {
 
       {isAdmin && (
         <>
-          <button className="btn-fab" aria-label="Novo lançamento" onClick={() => setSheet('new')}>
+          <button id="lancamentos-novo" className="btn-fab" aria-label="Novo lançamento" onClick={() => setSheet('new')}>
             <Icon name="add" size={28} />
           </button>
           <EntrySheet

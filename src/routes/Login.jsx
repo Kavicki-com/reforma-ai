@@ -165,7 +165,7 @@ export default function Login() {
 
   return (
     <div className={`${styles.wrap} ${wide ? styles.wrap_wide : ''}`}>
-      <Link to="/" className={styles.siteLink}>
+      <Link to="/" id="auth-ir-site" className={styles.siteLink}>
         <Icon name="arrow_back" /> Ir para o site
       </Link>
       <div className={styles.brand}>
@@ -185,14 +185,14 @@ export default function Login() {
             <label>Senha</label>
             <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" required />
           </div>
-          <Link to="/recuperar-senha" className={styles.forgot}>Esqueci minha senha</Link>
+          <Link to="/recuperar-senha" id="auth-esqueci-senha" className={styles.forgot}>Esqueci minha senha</Link>
           {error && <p className={styles.error}>{error}</p>}
-          <button className="btn btn-primary btn-block" disabled={busy}>
+          <button id="auth-entrar" className="btn btn-primary btn-block" disabled={busy}>
             {busy ? <Spinner small /> : 'Entrar'}
           </button>
           <p className={styles.toggle}>
             Não tem conta?
-            <button type="button" className={styles.toggleBtn} onClick={switchMode}>Criar conta</button>
+            <button type="button" id="auth-ir-criar-conta" className={styles.toggleBtn} onClick={switchMode}>Criar conta</button>
           </p>
         </form>
       ) : (
@@ -289,22 +289,22 @@ export default function Login() {
 
           <p className={styles.consent}>
             Ao continuar você confirma estar de acordo com as{' '}
-            <button type="button" className={styles.linkBtn} onClick={() => setLegal('privacidade')}>políticas</button> e{' '}
-            <button type="button" className={styles.linkBtn} onClick={() => setLegal('termos')}>termos de uso</button> do Krovo.
+            <button type="button" id="auth-ver-politicas" className={styles.linkBtn} onClick={() => setLegal('privacidade')}>políticas</button> e{' '}
+            <button type="button" id="auth-ver-termos" className={styles.linkBtn} onClick={() => setLegal('termos')}>termos de uso</button> do Krovo.
           </p>
 
           <div className={styles.actions}>
-            <button className="btn btn-primary btn-block" disabled={busy}>
+            <button id="auth-criar-conta" className="btn btn-primary btn-block" disabled={busy}>
               {busy ? <Spinner small /> : step < 2 ? 'Continuar' : 'Criar conta'}
             </button>
             {step > 0 && (
-              <button type="button" className="btn btn-block" onClick={back} disabled={busy}>Voltar</button>
+              <button type="button" id="auth-voltar" className="btn btn-block" onClick={back} disabled={busy}>Voltar</button>
             )}
           </div>
 
           <p className={styles.toggle}>
             Já tem conta?
-            <button type="button" className={styles.toggleBtn} onClick={switchMode}>Entrar</button>
+            <button type="button" id="auth-ir-entrar" className={styles.toggleBtn} onClick={switchMode}>Entrar</button>
           </p>
         </form>
         </>

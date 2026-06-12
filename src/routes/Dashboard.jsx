@@ -107,7 +107,7 @@ export default function Dashboard() {
   return (
     <div className="page">
       <div className={styles.topbar}>
-        <button className={`${styles.iconBtn} ${styles.menuBtn}`} onClick={() => setMenuOpen(true)} aria-label="Abrir menu">
+        <button id="dash-abrir-menu" className={`${styles.iconBtn} ${styles.menuBtn}`} onClick={() => setMenuOpen(true)} aria-label="Abrir menu">
           <Icon name="menu" size={26} />
         </button>
         <p className={`muted ${styles.greeting}`}>
@@ -115,6 +115,7 @@ export default function Dashboard() {
           {!isAdmin && ' · somente leitura'}
         </p>
         <a
+          id="dash-suporte-whatsapp"
           className={`${styles.iconBtn} ${styles.whatsBtn}`}
           href="https://wa.me/5521979137098?text=Ol%C3%A1!%20Preciso%20de%20ajuda%20com%20o%20Krovo."
           target="_blank"
@@ -127,7 +128,7 @@ export default function Dashboard() {
           </svg>
         </a>
         {isAdmin && (
-          <button className={styles.iconBtn} onClick={openShare} aria-label="Compartilhar resumo">
+          <button id="dash-compartilhar" className={styles.iconBtn} onClick={openShare} aria-label="Compartilhar resumo">
             <Icon name="share" size={22} />
           </button>
         )}
@@ -203,7 +204,7 @@ export default function Dashboard() {
 
       {isAdmin && (
         <>
-          <button className="btn-fab" aria-label="Novo lançamento" onClick={() => setSheetOpen(true)}>
+          <button id="dash-novo-lancamento" className="btn-fab" aria-label="Novo lançamento" onClick={() => setSheetOpen(true)}>
             <Icon name="add" size={28} />
           </button>
           <EntrySheet
@@ -224,7 +225,7 @@ export default function Dashboard() {
             </p>
             <div className={styles.shareRow}>
               <input className="input" readOnly value={shareUrl} onFocus={(e) => e.target.select()} />
-              <button className="btn btn-primary" onClick={copyLink} aria-label="Copiar link">
+              <button id="dash-copiar-link" className="btn btn-primary" onClick={copyLink} aria-label="Copiar link">
                 <Icon name={copied ? 'check' : 'content_copy'} size={20} />
               </button>
             </div>

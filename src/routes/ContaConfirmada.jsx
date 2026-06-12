@@ -38,7 +38,7 @@ export default function ContaConfirmada() {
           <>
             <p className="muted">Tudo certo. Estamos te levando para o app…</p>
             <div className="center"><Spinner small /></div>
-            <button className="btn btn-primary btn-block" onClick={() => navigate('/', { replace: true })}>
+            <button id="conta-confirmada-continuar" className="btn btn-primary btn-block" onClick={() => navigate('/', { replace: true })}>
               Entrar agora
             </button>
           </>
