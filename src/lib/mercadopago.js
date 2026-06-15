@@ -19,7 +19,6 @@ function loadSdk() {
   return sdkPromise
 }
 
-// Public Key conforme o ambiente (VITE_MP_ENV); cai pro nome sem sufixo se preciso.
 function resolvePublicKey() {
   const isProd = import.meta.env.VITE_MP_ENV === 'production'
   return (
@@ -30,7 +29,6 @@ function resolvePublicKey() {
   )
 }
 
-// Retorna uma instância MercadoPago já configurada para pt-BR.
 export async function getMercadoPago() {
   const publicKey = resolvePublicKey()
   if (!publicKey) throw new Error('Public Key do Mercado Pago ausente. Confira o .env')

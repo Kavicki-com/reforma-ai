@@ -8,8 +8,6 @@ import styles from './ConfirmEmail.module.css'
 
 const logo = `${import.meta.env.BASE_URL}pwa-192.png`
 
-// Tela mostrada após o cadastro: orienta o usuário a confirmar a conta pelo
-// link enviado por e-mail. Permite reenviar a mensagem.
 export default function ConfirmEmail() {
   const { resendSignup } = useAuth()
   const { state } = useLocation()

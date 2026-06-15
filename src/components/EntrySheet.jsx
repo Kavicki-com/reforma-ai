@@ -34,7 +34,6 @@ export default function EntrySheet({ open, entryId, onClose, onSaved }) {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
 
-  // Carrega categorias (globais) e etapas da obra ativa ao abrir
   useEffect(() => {
     if (!open || !project) return
     let active = true
@@ -49,7 +48,6 @@ export default function EntrySheet({ open, entryId, onClose, onSaved }) {
     return () => { active = false }
   }, [open, project])
 
-  // Prepara o formulario quando abre (novo => limpa; edicao => carrega)
   useEffect(() => {
     if (!open) return
     setError('')

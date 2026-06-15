@@ -1,13 +1,9 @@
-// Validações e máscaras de formulário (e-mail, CPF, força de senha).
-
-// ---- E-mail ----
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export function isValidEmail(value) {
   return EMAIL_RE.test(String(value || '').trim())
 }
 
-// ---- CPF ----
 // Máscara progressiva: 000.000.000-00
 export function maskCpf(value) {
   const d = String(value || '').replace(/\D/g, '').slice(0, 11)
@@ -36,7 +32,6 @@ export function isValidCpf(value) {
   return digit(9) === Number(cpf[9]) && digit(10) === Number(cpf[10])
 }
 
-// ---- Força de senha ----
 // Retorna { score: 0..4, label, key } — score 0 = vazia.
 // key serve pra estilizar (weak | fair | good | strong).
 const STRENGTH = [

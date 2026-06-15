@@ -52,7 +52,6 @@ export default function Photos() {
 
   useEffect(() => { load() }, [load])
 
-  // Etapa(s) em andamento — exibida no topo
   useEffect(() => {
     if (!project) return
     supabase

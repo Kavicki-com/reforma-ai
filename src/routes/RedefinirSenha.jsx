@@ -11,7 +11,6 @@ import styles from './ConfirmEmail.module.css'
 
 const logo = `${import.meta.env.BASE_URL}pwa-192.png`
 
-// Tela de redefinição de senha, aberta ao clicar no link do e-mail.
 // O link chega com ?recovery=1 e o PKCE já criou a sessão de recuperação; aqui
 // o usuário define a nova senha. Sem sessão (link expirado/inválido), orienta a
 // pedir um novo link.

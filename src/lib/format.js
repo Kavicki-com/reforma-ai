@@ -1,5 +1,3 @@
-// Formatacao pt-BR / BRL
-
 const brl = new Intl.NumberFormat('pt-BR', {
   style: 'currency',
   currency: 'BRL',
@@ -17,7 +15,6 @@ export function dateBR(value) {
   return `${d}/${m}/${y}`
 }
 
-// Converte input date (YYYY-MM-DD) ou null
 export function toDateInput(value) {
   if (!value) return ''
   return String(value).slice(0, 10)

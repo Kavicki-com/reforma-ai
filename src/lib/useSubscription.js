@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from 'react'
 import { supabase } from './supabase'
 import { useAuth } from '../auth/AuthProvider'
 
-// Lê a assinatura do usuário atual. Base para gating de recursos pagos.
 export function useSubscription() {
   const { user } = useAuth()
   const [subscription, setSubscription] = useState(null)

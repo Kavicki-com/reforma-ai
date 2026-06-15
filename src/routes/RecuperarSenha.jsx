@@ -9,7 +9,6 @@ import styles from './ConfirmEmail.module.css'
 
 const logo = `${import.meta.env.BASE_URL}pwa-192.png`
 
-// Tela de "esqueci minha senha": pede o e-mail e dispara o link de redefinição.
 // Por segurança, a confirmação é genérica (não revela se o e-mail existe).
 export default function RecuperarSenha() {
   const { resetPassword } = useAuth()

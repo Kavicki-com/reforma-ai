@@ -8,9 +8,6 @@ import styles from './ConfirmEmail.module.css'
 
 const logo = `${import.meta.env.BASE_URL}pwa-192.png`
 
-// Tela de sucesso aberta após clicar no link de confirmação do e-mail.
-// Assim que a sessão é criada, entra no app automaticamente (o onboarding
-// segue para a escolha de plano/pagamento).
 export default function ContaConfirmada() {
   const { session, loading } = useAuth()
   const navigate = useNavigate()

@@ -103,7 +103,6 @@ export default function Shopping() {
     })
   }
 
-  // Lê uma nota fiscal com IA e adiciona os itens como materiais "comprado"
   async function onAiImport(e) {
     const file = e.target.files[0]
     if (!file || !project) return

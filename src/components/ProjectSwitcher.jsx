@@ -27,7 +27,6 @@ const FILTERS = [
 
 const emptyForm = { name: '', budget_total: '' }
 
-// Seletor de obra: botão com a obra ativa + painel para trocar/criar/filtrar.
 export default function ProjectSwitcher({ onNavigate }) {
   const {
     projects, activeProject, setActiveProject, createProject, deleteProject,

@@ -6,7 +6,6 @@ import styles from './Legal.module.css'
 const logo = `${import.meta.env.BASE_URL}pwa-192.png`
 const UPDATED = '3 de junho de 2026'
 
-// Layout compartilhado das páginas legais (Termos de Uso e Política de Privacidade).
 function LegalLayout({ title, children }) {
   return (
     <div className={styles.wrap}>
@@ -193,7 +192,6 @@ export function PrivacidadeContent() {
   )
 }
 
-// Páginas completas (rotas /termos e /privacidade).
 export function Termos() {
   return <LegalLayout title="Termos de Uso"><TermosContent /></LegalLayout>
 }

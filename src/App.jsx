@@ -70,7 +70,6 @@ export default function App() {
   const { needsOnboarding, loading: projectsLoading } = useProjects()
   const location = useLocation()
   const navigate = useNavigate()
-  // rotas de transição (sem sessão "dentro do app")
   const authRoutes = ['/login', '/recuperar-senha', '/redefinir-senha', '/confirme-email', '/conta-confirmada', '/termos', '/privacidade']
   const inApp = session && !recovery && !authRoutes.includes(location.pathname)
   const showNav = inApp

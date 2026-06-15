@@ -143,7 +143,6 @@ export default function PublicSummary() {
         <span className="muted">Resumo da obra · somente leitura</span>
       </header>
 
-      {/* Progresso */}
       <div className={`card ${styles.progressCard}`}>
         <div className={styles.progressHead}>
           <span className="muted">Progresso da obra</span>
@@ -152,7 +151,6 @@ export default function PublicSummary() {
         <ProgressBar value={data.progress} />
       </div>
 
-      {/* Indicadores */}
       <div className={styles.grid}>
         <Stat label="Gasto" value={money(spent)} tone="paid" />
         <Stat label="A pagar" value={money(toPay)} tone="pending" />
@@ -164,7 +162,6 @@ export default function PublicSummary() {
         </div>
       </div>
 
-      {/* Duração */}
       <div className={`card ${styles.duration}`}>
         <div>
           <span className="muted">Duração da obra</span>
@@ -178,7 +175,6 @@ export default function PublicSummary() {
         </div>
       </div>
 
-      {/* Etapas */}
       <h2 className={styles.section}>Etapas</h2>
       {data.stages.length === 0 ? (
         <p className="muted">Nenhuma etapa cadastrada.</p>
@@ -199,7 +195,6 @@ export default function PublicSummary() {
         </div>
       )}
 
-      {/* Orçamento por categoria */}
       <h2 className={styles.section}>Orçamento por categoria</h2>
       {data.categories.length === 0 ? (
         <p className="muted">Sem gastos registrados.</p>
@@ -214,7 +209,6 @@ export default function PublicSummary() {
         </div>
       )}
 
-      {/* Materiais */}
       <h2 className={styles.section}>Lista de materiais</h2>
       {materialList.length === 0 ? (
         <p className="muted">Lista de materiais vazia.</p>
@@ -238,7 +232,6 @@ export default function PublicSummary() {
         </div>
       )}
 
-      {/* Fotos da obra */}
       {photoGroups.length > 0 && (
         <>
           <h2 className={styles.section}>Fotos da obra</h2>

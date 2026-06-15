@@ -1,7 +1,5 @@
 import styles from './PasswordMatch.module.css'
 
-// Descrição do campo "confirmar senha": diz se as duas senhas conferem.
-// Não renderiza nada enquanto a confirmação estiver vazia.
 export default function PasswordMatch({ value, confirm }) {
   if (!confirm) return null
   const match = value === confirm

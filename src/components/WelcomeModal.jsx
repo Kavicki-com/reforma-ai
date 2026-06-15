@@ -15,7 +15,7 @@ export default function WelcomeModal() {
 
   useEffect(() => {
     if (loading || subLoading || !user) return
-    if (isActive) return // já assinante: não mostra
+    if (isActive) return
     const key = `krovo_welcome_seen_${user.id}`
     if (localStorage.getItem(key)) return
     setOpen(true)

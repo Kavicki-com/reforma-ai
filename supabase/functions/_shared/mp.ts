@@ -39,12 +39,10 @@ export function env(name: string): string {
 
 export const MP_API = "https://api.mercadopago.com"
 
-// Sufixo do ambiente atual (PROD quando MP_ENV=production, senão TEST).
 function mpSuffix(): "PROD" | "TEST" {
   return env("MP_ENV").toLowerCase() === "production" ? "PROD" : "TEST"
 }
 
-// Resolve credencial por ambiente, com fallback ao nome sem sufixo.
 export function mpAccessToken(): string {
   return env(`MP_ACCESS_TOKEN_${mpSuffix()}`) || env("MP_ACCESS_TOKEN")
 }
@@ -70,7 +68,6 @@ export async function getUser(req: Request, admin: SupabaseClient) {
   return data.user
 }
 
-// Chamada autenticada à API do MP.
 export async function mpFetch(path: string, init: RequestInit = {}) {
   const resp = await fetch(`${MP_API}${path}`, {
     ...init,

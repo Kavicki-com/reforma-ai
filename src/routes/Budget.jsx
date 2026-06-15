@@ -41,7 +41,7 @@ export default function Budget() {
     await supabase.from('projects').update({ budget_total: Number(budgetInput || 0) }).eq('id', project.id)
     setSaving(false)
     setEditingBudget(false)
-    navigate(0) // recarrega dados
+    navigate(0)
   }
 
   if (loadingProject || loading) return <div className="spinner-wrap"><Spinner /></div>

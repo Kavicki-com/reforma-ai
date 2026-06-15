@@ -84,7 +84,6 @@ export default function Login() {
     }
   }
 
-  // Validação por passo do signup.
   function validateStep() {
     if (step === 0) {
       if (!fullName.trim()) return 'Informe seu nome.'
@@ -157,7 +156,6 @@ export default function Login() {
     navigate('/', { replace: true })
   }
 
-  // ---- Render ----
   const STEPS = ['Conta', 'Endereço', 'Plano']
 
   // No passo do plano alargamos o form pra acomodar os dois cards lado a lado.

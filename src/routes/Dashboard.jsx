@@ -56,7 +56,6 @@ export default function Dashboard() {
 
   useEffect(() => { loadTotals() }, [loadTotals])
 
-  // Busca o link público existente (admin)
   useEffect(() => {
     if (!project || !isAdmin) return
     supabase
@@ -136,7 +135,6 @@ export default function Dashboard() {
 
       <SideMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
 
-      {/* Progresso geral da obra */}
       <div className={`card ${styles.progressCard}`}>
         <div className={styles.progressHead}>
           <span className={styles.statLabel}>Progresso da obra</span>
@@ -145,7 +143,6 @@ export default function Dashboard() {
         <ProgressBar value={progress} />
       </div>
 
-      {/* Destaque: gasto pago de fato */}
       <div className={`card ${styles.hero}`}>
         <span className={styles.heroLabel}>Gasto total da obra</span>
         <strong className={styles.heroValue}>{money(spent)}</strong>
@@ -159,7 +156,6 @@ export default function Dashboard() {
         )}
       </div>
 
-      {/* Grade de indicadores */}
       <div className={styles.grid}>
         <div className={`card ${styles.donutCard}`}>
           <Donut value={donutPct} center={`${donutPct}%`} size={76} />
@@ -175,7 +171,6 @@ export default function Dashboard() {
         <Stat label="A pagar" value={money(toPay)} hint="custos + materiais a comprar" tone="pending" />
       </div>
 
-      {/* Duracao (derivada das etapas) */}
       <div className={`card ${styles.duration}`}>
         <div>
           <span className={styles.statLabel}>Duração da obra</span>
@@ -189,7 +184,6 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Acordeões — conteúdo na própria tela */}
       <div className={styles.accordions}>
         <Accordion icon="bar_chart" title="Orçamento por categoria">
           <BudgetSummary projectId={project?.id} />

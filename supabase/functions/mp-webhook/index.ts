@@ -91,7 +91,6 @@ Deno.serve(async (req) => {
     }
 
     if (type === "subscription_preapproval" || type === "preapproval") {
-      // Mudança de estado da assinatura recorrente.
       const mp = await mpFetch(`/preapproval/${dataId}`)
       if (!mp.ok) return new Response("ok", { status: 200 })
       const pre = mp.data
@@ -142,7 +141,6 @@ Deno.serve(async (req) => {
       )
 
       if (ap.status === "processed" || ap.payment?.status === "approved") {
-        // estende o acesso até a próxima cobrança (mensal ou anual).
         const period = (sub as { plans?: { billing_period?: string } }).plans?.billing_period
         await admin.from("subscriptions").update({
           status: "active",

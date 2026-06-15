@@ -1,8 +1,6 @@
 import { passwordStrength } from '../lib/validation'
 import styles from './PasswordStrength.module.css'
 
-// Barra de força de senha (4 segmentos) + rótulo.
-// Não renderiza nada enquanto a senha estiver vazia.
 export default function PasswordStrength({ value }) {
   const { score, label, key } = passwordStrength(value)
   if (!score) return null

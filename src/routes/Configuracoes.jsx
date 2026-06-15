@@ -30,7 +30,6 @@ export default function Configuracoes() {
   )
 }
 
-// ---- Dados de cadastro (nome + endereço) ----
 function ProfileSection({ userId, setToast }) {
   const [fullName, setFullName] = useState('')
   const [addr, setAddr] = useState(emptyAddr)
@@ -140,7 +139,6 @@ function ProfileSection({ userId, setToast }) {
   )
 }
 
-// ---- Alterar senha ----
 function PasswordSection({ setToast }) {
   const [pw, setPw] = useState('')
   const [pw2, setPw2] = useState('')
@@ -179,7 +177,6 @@ function PasswordSection({ setToast }) {
   )
 }
 
-// ---- Excluir conta ----
 function DangerSection({ signOut, navigate }) {
   const [open, setOpen] = useState(false)
   const [busy, setBusy] = useState(false)

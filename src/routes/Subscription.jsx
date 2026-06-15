@@ -73,7 +73,6 @@ export default function Subscription() {
   )
 }
 
-// ---- Assinatura ativa: detalhes + gerenciamento + histórico ----
 function ActiveSubscription({ subscription, refresh, setToast }) {
   const { user } = useAuth()
   const [sheet, setSheet] = useState(null) // 'card' | 'cancel' | null
@@ -146,7 +145,6 @@ function ActiveSubscription({ subscription, refresh, setToast }) {
 
       <PaymentsHistory ownerId={user.id} />
 
-      {/* Trocar cartão */}
       <BottomSheet open={sheet === 'card'} title="Alterar cartão" onClose={() => !busy && setSheet(null)}>
         {error && <p className={styles.error}>{error}</p>}
         <CardTokenForm
@@ -159,7 +157,6 @@ function ActiveSubscription({ subscription, refresh, setToast }) {
         />
       </BottomSheet>
 
-      {/* Cancelar */}
       <BottomSheet open={sheet === 'cancel'} title="Cancelar assinatura" onClose={() => !busy && setSheet(null)}>
         {error && <p className={styles.error}>{error}</p>}
         <p className="muted" style={{ marginBottom: 'var(--sp-4)' }}>
@@ -176,7 +173,6 @@ function ActiveSubscription({ subscription, refresh, setToast }) {
   )
 }
 
-// ---- Histórico de pagamentos (invoices) ----
 function PaymentsHistory({ ownerId }) {
   const [rows, setRows] = useState(null)
 

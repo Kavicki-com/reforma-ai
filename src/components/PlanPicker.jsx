@@ -5,7 +5,6 @@ import Icon from './Icon'
 import Spinner from './Spinner'
 import styles from './PlanPicker.module.css'
 
-// Funcionalidades do Krovo (iguais nos dois ciclos; o que muda é preço/desconto).
 const FEATURES = [
   'Controle de custos e lançamentos',
   'Etapas e cronograma da obra',
@@ -15,8 +14,6 @@ const FEATURES = [
   'Resumo público pra compartilhar',
 ]
 
-// Seletor de plano (mensal/anual). Reutilizado no signup e na tela de assinatura.
-// value = code do plano selecionado; onChange(code).
 export default function PlanPicker({ value, onChange }) {
   const [plans, setPlans] = useState([])
   const [loading, setLoading] = useState(true)
@@ -52,7 +49,6 @@ export default function PlanPicker({ value, onChange }) {
 
   if (loading) return <div className="center" style={{ padding: 'var(--sp-4)' }}><Spinner /></div>
 
-  // economia do anual vs 12x mensal
   const mensal = plans.find((p) => p.billing_period === 'monthly')
   const anual = plans.find((p) => p.billing_period === 'yearly')
   const economia = mensal && anual ? mensal.amount * 12 - anual.amount : 0

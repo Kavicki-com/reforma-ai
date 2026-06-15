@@ -2,7 +2,6 @@ import { useState } from 'react'
 import Icon from './Icon'
 import styles from './PasswordInput.module.css'
 
-// Campo de senha com botão de mostrar/ocultar (ícone de olho).
 export default function PasswordInput({ value, onChange, autoComplete = 'current-password', required, placeholder }) {
   const [show, setShow] = useState(false)
   return (

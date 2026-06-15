@@ -97,12 +97,10 @@ export default function Landing() {
 
   return (
     <div className={styles.landing}>
-      {/* ===== Barra de anúncio (Coldture) ===== */}
       <Link to={SIGNUP} id="lp-topo-trial" className={styles.announce}>
         <Icon name="celebration" size={16} /> {trialDays} dias grátis — teste sem cartão de crédito
       </Link>
 
-      {/* ===== Navegação ===== */}
       <header className={styles.nav}>
         <div className={styles.navInner}>
           <a href="#" className={styles.brand} onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>
@@ -121,7 +119,6 @@ export default function Landing() {
         </div>
       </header>
 
-      {/* ===== Hero ===== */}
       <section className={styles.hero}>
         <div className={styles.heroInner}>
           <div className={styles.heroText}>
@@ -146,7 +143,6 @@ export default function Landing() {
             </p>
           </div>
 
-          {/* Foto da arquiteta + card do dashboard (CSS) sobreposto */}
           <div className={styles.heroMedia}>
             <img
               className={styles.heroPhoto}
@@ -181,7 +177,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ===== Faixa de confiança (Coldture) ===== */}
       <div className={styles.strip}>
         <span><Icon name="verified" size={18} /> {trialDays} dias grátis</span>
         <span><Icon name="credit_card_off" size={18} /> Sem cartão pra testar</span>
@@ -189,7 +184,6 @@ export default function Landing() {
         <span><Icon name="pix" size={18} /> Pague com cartão ou PIX</span>
       </div>
 
-      {/* ===== Marquee (air up) ===== */}
       <div className={styles.marquee}>
         <div className={styles.marqueeTrack}>
           {[...MARQUEE, ...MARQUEE].map((t, i) => (
@@ -198,7 +192,6 @@ export default function Landing() {
         </div>
       </div>
 
-      {/* ===== Recursos ===== */}
       <section id="recursos" className={styles.section}>
         <div className={`${styles.sectionHead} ${styles.reveal}`}>
           <p className={styles.kicker}>Recursos</p>
@@ -216,7 +209,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ===== Destaque IA (Coldture "brand new") ===== */}
       <section className={styles.ia}>
         <div className={styles.iaInner}>
           <div className={`${styles.iaText} ${styles.reveal}`}>
@@ -247,7 +239,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ===== Como funciona (air up "crazy easy") ===== */}
       <section id="como-funciona" className={styles.section}>
         <div className={`${styles.sectionHead} ${styles.reveal}`}>
           <p className={styles.kicker}>Como funciona</p>
@@ -265,7 +256,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ===== Benefícios (air up "clinically proven") ===== */}
       <section className={`${styles.section} ${styles.sectionAlt}`}>
         <div className={`${styles.sectionHead} ${styles.reveal}`}>
           <p className={styles.kicker}>Por que Krovo</p>
@@ -282,7 +272,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ===== Planos ===== */}
       <section id="planos" className={styles.section}>
         <div className={`${styles.sectionHead} ${styles.reveal}`}>
           <p className={styles.kicker}>Planos</p>
@@ -320,7 +309,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ===== FAQ ===== */}
       <section id="duvidas" className={`${styles.section} ${styles.sectionAlt}`}>
         <div className={`${styles.sectionHead} ${styles.reveal}`}>
           <p className={styles.kicker}>Dúvidas</p>
@@ -337,7 +325,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ===== CTA final (air up "still thirsty?") ===== */}
       <section className={styles.section}>
         <div className={`${styles.finalCta} ${styles.reveal}`}>
           <h2>Ainda anotando a obra no caderninho?</h2>
@@ -348,7 +335,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ===== Footer ===== */}
       <footer className={styles.footer}>
         <div className={styles.footerBrand}>
           <img src={logo} alt="" /> <span>Krovo</span>
