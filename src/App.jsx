@@ -19,6 +19,7 @@ import Stages from './routes/Stages'
 import Budget from './routes/Budget'
 import Shopping from './routes/Shopping'
 import Photos from './routes/Photos'
+import Documentos from './routes/Documentos'
 import Subscription from './routes/Subscription'
 import Configuracoes from './routes/Configuracoes'
 import ContaConfirmada from './routes/ContaConfirmada'
@@ -63,7 +64,7 @@ function Gate() {
 }
 
 // Rotas com dados de obra — exigem ao menos uma obra cadastrada.
-const obraRoutes = ['/', '/lancamentos', '/etapas', '/orcamento', '/materiais', '/fotos']
+const obraRoutes = ['/', '/lancamentos', '/etapas', '/orcamento', '/materiais', '/fotos', '/documentos']
 
 export default function App() {
   const { session, loading, recovery, beginRecovery } = useAuth()
@@ -75,6 +76,8 @@ export default function App() {
   const showNav = inApp
   // Landing na raiz pra visitantes: solta a largura do container (página full-bleed).
   const isLanding = !loading && !session && location.pathname === '/'
+  // Resumo público (link compartilhado): também full-bleed, sem o cap de 680px.
+  const isPublic = location.pathname.startsWith('/s/')
   // Sem nenhuma obra: cai no onboarding nas telas que dependem de obra.
   // Enquanto as obras carregam, segura num spinner — decide entre Onboarding
   // e conteúdo só com a resposta na mão (sem piscar nenhum dos dois).
@@ -136,7 +139,7 @@ export default function App() {
       {/* Boas-vindas só com as obras carregadas e fora do onboarding —
           senão ele abre durante o spinner e sobrepõe o Onboarding. */}
       {inApp && !projectsLoading && !needsOnboarding && <WelcomeModal />}
-      <div className={`app-main ${isLanding ? 'app-main--full' : ''}`}>
+      <div className={`app-main ${isLanding || isPublic ? 'app-main--full' : ''}`}>
         {projectsPending ? <div className="spinner-wrap"><Spinner /></div> : showOnboarding ? <Onboarding /> : (
         <Routes>
           <Route path="/login" element={<Login />} />
@@ -153,6 +156,7 @@ export default function App() {
           <Route path="/orcamento" element={<Protected><Budget /></Protected>} />
           <Route path="/materiais" element={<Protected><Shopping /></Protected>} />
           <Route path="/fotos" element={<Protected><Photos /></Protected>} />
+          <Route path="/documentos" element={<Protected><Documentos /></Protected>} />
           <Route path="/assinatura" element={<Protected><Subscription /></Protected>} />
           <Route path="/configuracoes" element={<Protected><Configuracoes /></Protected>} />
           <Route path="*" element={<Navigate to="/" replace />} />

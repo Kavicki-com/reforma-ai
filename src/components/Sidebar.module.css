@@ -29,14 +29,15 @@
   .brandLogo { width: 32px; height: 32px; border-radius: 8px; object-fit: cover; }
   .user { display: block; margin-top: 6px; font-size: .85rem; color: var(--text-muted); }
 
-  .nav { display: flex; flex-direction: column; gap: 4px; }
+  .nav { display: flex; flex-direction: column; gap: 2px; }
   .link {
     display: flex;
     align-items: center;
-    gap: var(--sp-3);
-    padding: 12px var(--sp-3);
+    gap: var(--sp-2);
+    padding: 9px var(--sp-3);
     border-radius: var(--radius-sm);
     color: var(--text);
+    font-size: .9rem;
     font-weight: 600;
     line-height: 1.2;
   }
@@ -48,28 +49,28 @@
   .install {
     display: flex;
     align-items: center;
-    gap: var(--sp-3);
-    padding: 12px var(--sp-3);
+    gap: var(--sp-2);
+    padding: 9px var(--sp-3);
     border: 1px solid var(--info);
     border-radius: var(--radius-sm);
     background: var(--info-soft);
     color: var(--info);
     font-family: var(--font-body);
-    font-size: 1rem;
+    font-size: .9rem;
     font-weight: 600;
     cursor: pointer;
   }
   .signout {
     display: flex;
     align-items: center;
-    gap: var(--sp-3);
-    padding: 12px var(--sp-3);
+    gap: var(--sp-2);
+    padding: 9px var(--sp-3);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     background: var(--surface);
     color: var(--danger);
     font-family: var(--font-body);
-    font-size: 1rem;
+    font-size: .9rem;
     font-weight: 600;
     cursor: pointer;
   }

@@ -10,17 +10,24 @@ import Icon from '../components/Icon'
 import Accordion from '../components/Accordion'
 import BudgetSummary from '../components/BudgetSummary'
 import MaterialsSummary from '../components/MaterialsSummary'
-import StagesSummary from '../components/StagesSummary'
 import EntrySheet from '../components/EntrySheet'
 import SideMenu from '../components/SideMenu'
 import BottomSheet from '../components/BottomSheet'
 import styles from './Dashboard.module.css'
+
+const STAGE_STATUS = {
+  pendente: { label: 'Pendente', cls: 'badge-pending' },
+  em_andamento: { label: 'Em andamento', cls: 'badge-info' },
+  pausada: { label: 'Pausada', cls: 'badge-muted' },
+  concluida: { label: 'Concluída', cls: 'badge-paid' },
+}
 
 export default function Dashboard() {
   const { profile, isAdmin } = useAuth()
   const { project, loading: loadingProject } = useProject()
   const [totals, setTotals] = useState(null)
   const [stageStats, setStageStats] = useState({ total: 0, done: 0 })
+  const [stages, setStages] = useState([])
   const [progress, setProgress] = useState(0)
   const [loading, setLoading] = useState(true)
   const [sheetOpen, setSheetOpen] = useState(false)
@@ -28,6 +35,10 @@ export default function Dashboard() {
   const [shareOpen, setShareOpen] = useState(false)
   const [shareToken, setShareToken] = useState(null)
   const [copied, setCopied] = useState(false)
+  const [docsPwd, setDocsPwd] = useState('')
+  const [docsPwdSet, setDocsPwdSet] = useState(false)
+  const [savingPwd, setSavingPwd] = useState(false)
+  const [pwdMsg, setPwdMsg] = useState('')
 
   const loadTotals = useCallback(() => {
     if (!project) return
@@ -41,9 +52,13 @@ export default function Dashboard() {
     // Progresso da obra: baseado só nas etapas (compras de material não contam,
     // senão comprar cedo infla o avanço). Peso por etapa: pendente=0,
     // em andamento/pausada=0,5, concluída=1.
-    supabase.from('stages').select('status').eq('project_id', project.id)
+    supabase.from('stages')
+      .select('id, name, status, start_date, end_date, completed_at')
+      .eq('project_id', project.id)
+      .order('start_date', { ascending: true, nullsFirst: false })
       .then(({ data }) => {
         const stages = data || []
+        setStages(stages)
         setStageStats({
           total: stages.length,
           done: stages.filter((s) => s.status === 'concluida').length,
@@ -60,13 +75,16 @@ export default function Dashboard() {
     if (!project || !isAdmin) return
     supabase
       .from('public_shares')
-      .select('token')
+      .select('token, docs_password_hash')
       .eq('project_id', project.id)
       .eq('enabled', true)
       .order('created_at')
       .limit(1)
       .maybeSingle()
-      .then(({ data }) => setShareToken(data?.token || null))
+      .then(({ data }) => {
+        setShareToken(data?.token || null)
+        setDocsPwdSet(!!data?.docs_password_hash)
+      })
   }, [project, isAdmin])
 
   const shareUrl = shareToken ? `${window.location.href.split('#')[0]}#/s/${shareToken}` : ''
@@ -90,6 +108,28 @@ export default function Dashboard() {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch { /* clipboard indisponível */ }
+  }
+
+  async function saveDocsPassword() {
+    if (!project || !docsPwd.trim()) return
+    setSavingPwd(true); setPwdMsg('')
+    const { error } = await supabase.rpc('set_share_docs_password', { p_project_id: project.id, p_password: docsPwd })
+    setSavingPwd(false)
+    if (error) { setPwdMsg('Erro ao salvar a senha.'); return }
+    setDocsPwdSet(true)
+    setDocsPwd('')
+    setPwdMsg('Senha salva.')
+  }
+
+  async function removeDocsPassword() {
+    if (!project) return
+    setSavingPwd(true); setPwdMsg('')
+    const { error } = await supabase.rpc('set_share_docs_password', { p_project_id: project.id, p_password: null })
+    setSavingPwd(false)
+    if (error) { setPwdMsg('Erro ao remover a senha.'); return }
+    setDocsPwdSet(false)
+    setDocsPwd('')
+    setPwdMsg('Senha removida — a seção fica oculta no link.')
   }
 
   if (loadingProject || loading) {
@@ -135,12 +175,35 @@ export default function Dashboard() {
 
       <SideMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
 
-      <div className={`card ${styles.progressCard}`}>
-        <div className={styles.progressHead}>
-          <span className={styles.statLabel}>Progresso da obra</span>
-          <strong className={styles.progressPct}>{progress}%</strong>
+      <div className={styles.kpis}>
+        <div className={`card ${styles.progressCard} ${styles.cProgress}`}>
+          <div className={styles.progressHead}>
+            <span className={styles.statLabel}>Progresso da obra</span>
+            <strong className={styles.progressPct}>{progress}%</strong>
+          </div>
+          <ProgressBar value={progress} />
         </div>
-        <ProgressBar value={progress} />
+
+        <Stat label="Gasto" value={money(spent)} tone="paid" cellClass={styles.cGasto} />
+        <Stat label="A pagar" value={money(toPay)} tone="pending" cellClass={styles.cPagar} />
+        <Stat label="Custo estimado" value={money(t.estimated_total)} cellClass={styles.cEstimated} />
+
+        <div className={`card ${styles.donutCard} ${styles.cStagesDonut}`}>
+          <Donut value={donutPct} center={`${donutPct}%`} size={92} />
+          <span className={styles.statLabel}>Etapas concluídas</span>
+          <span className={styles.statHint}>{stageStats.done} de {stageStats.total}</span>
+        </div>
+
+        <div className={`card ${styles.kpiTall} ${styles.cDuration}`}>
+          <span className={styles.statLabel}>Duração da obra</span>
+          <strong className={styles.durationValue}>
+            {t.duration_days != null ? `${t.duration_days} dias` : '—'}
+          </strong>
+          <div className={styles.dates}>
+            <span>Início: {dateBR(t.start_date)}</span>
+            <span>Previsão: {dateBR(t.expected_end_date)}</span>
+          </div>
+        </div>
       </div>
 
       <div className={`card ${styles.hero}`}>
@@ -156,43 +219,32 @@ export default function Dashboard() {
         )}
       </div>
 
-      <div className={styles.grid}>
-        <div className={`card ${styles.donutCard}`}>
-          <Donut value={donutPct} center={`${donutPct}%`} size={76} />
-          <span className={styles.statLabel}>Etapas concluídas</span>
-          <span className={styles.statHint}>{stageStats.done} de {stageStats.total}</span>
-        </div>
-        <Stat label="Custo estimado" value={money(t.estimated_total)} hint="já gasto + falta gastar" />
-        <Stat
-          label="Saldo do orçamento"
-          value={money(t.remaining)}
-          tone={Number(t.remaining) < 0 ? 'pending' : 'paid'}
-        />
-        <Stat label="A pagar" value={money(toPay)} hint="custos + materiais a comprar" tone="pending" />
-      </div>
-
-      <div className={`card ${styles.duration}`}>
-        <div>
-          <span className={styles.statLabel}>Duração da obra</span>
-          <strong className={styles.durationValue}>
-            {t.duration_days != null ? `${t.duration_days} dias` : '—'}
-          </strong>
-        </div>
-        <div className={styles.dates}>
-          <span>Início: {dateBR(t.start_date)}</span>
-          <span>Previsão: {dateBR(t.expected_end_date)}</span>
-        </div>
-      </div>
+      {stages.length > 0 && (
+        <section className={styles.stagesBlock}>
+          <h2 className={styles.section}>Etapas</h2>
+          <div className={styles.stageGrid}>
+            {stages.map((s) => {
+              const st = STAGE_STATUS[s.status] || STAGE_STATUS.pendente
+              return (
+                <div key={s.id} className={`card ${styles.stageCard}`}>
+                  <span className={`badge ${st.cls}`}>{st.label}</span>
+                  <strong className={styles.stageName}>{s.name}</strong>
+                  <span className={styles.sub}>
+                    {dateBR(s.start_date)} → {dateBR(s.completed_at || s.end_date)}
+                  </span>
+                </div>
+              )
+            })}
+          </div>
+        </section>
+      )}
 
       <div className={styles.accordions}>
-        <Accordion icon="bar_chart" title="Orçamento por categoria">
+        <Accordion icon="bar_chart" title="Gastos por categoria">
           <BudgetSummary projectId={project?.id} />
         </Accordion>
         <Accordion icon="shopping_cart" title="Lista de materiais">
           <MaterialsSummary projectId={project?.id} />
-        </Accordion>
-        <Accordion icon="calendar_month" title="Etapas da obra">
-          <StagesSummary projectId={project?.id} />
         </Accordion>
       </div>
 
@@ -224,6 +276,36 @@ export default function Dashboard() {
               </button>
             </div>
             {copied && <span className="muted">Link copiado!</span>}
+
+            <div className={styles.shareDocs}>
+              <strong>Notas e comprovantes</strong>
+              <span className="muted">
+                Defina uma senha para liberar a seção de notas e comprovantes no link.
+                Sem senha, a seção não aparece para quem abre o link.
+              </span>
+              {docsPwdSet && (
+                <span className={styles.docsActive}><Icon name="lock" size={16} /> Senha ativa</span>
+              )}
+              <div className={styles.shareRow}>
+                <input
+                  className="input"
+                  type="password"
+                  autoComplete="new-password"
+                  value={docsPwd}
+                  onChange={(e) => setDocsPwd(e.target.value)}
+                  placeholder={docsPwdSet ? 'Nova senha' : 'Senha'}
+                />
+                <button className="btn btn-primary" onClick={saveDocsPassword} disabled={savingPwd || !docsPwd.trim()}>
+                  {savingPwd ? <Spinner small /> : 'Salvar'}
+                </button>
+              </div>
+              {docsPwdSet && (
+                <button className="btn btn-ghost btn-block" onClick={removeDocsPassword} disabled={savingPwd}>
+                  Remover senha
+                </button>
+              )}
+              {pwdMsg && <span className="muted">{pwdMsg}</span>}
+            </div>
           </div>
         </BottomSheet>
       )}
@@ -231,9 +313,9 @@ export default function Dashboard() {
   )
 }
 
-function Stat({ label, value, tone, hint }) {
+function Stat({ label, value, tone, hint, cellClass }) {
   return (
-    <div className={`card ${styles.stat}`}>
+    <div className={`card ${styles.stat} ${cellClass || ''}`}>
       <span className={styles.statLabel}>{label}</span>
       <strong className={`${styles.statValue} ${tone ? styles[tone] : ''}`}>{value}</strong>
       {hint && <span className={styles.statHint}>{hint}</span>}

@@ -1,0 +1,50 @@
+.fileBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-4);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--primary);
+  font-weight: 600;
+  cursor: pointer;
+}
+.fileCurrent {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  background: none;
+  border: none;
+  padding: 0;
+  margin-bottom: var(--sp-2);
+  color: var(--primary);
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+}
+
+.picker {
+  max-height: 180px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--sp-2);
+  margin-top: var(--sp-2);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.pickRow {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: .9rem;
+}
+.pickRow:hover { background: var(--surface-2); }
+.pickRow input { width: 18px; height: 18px; flex-shrink: 0; accent-color: var(--primary); }
+
+.count { color: var(--primary); font-weight: 700; }
+.error { color: var(--danger, #c0392b); font-size: .85rem; }

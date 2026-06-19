@@ -11,8 +11,8 @@ import styles from './SideMenu.module.css'
 const logo = `${import.meta.env.BASE_URL}pwa-192.png`
 
 // No mobile a navegação principal fica na barra inferior; o drawer só traz
-// os itens que não cabem lá: Orçamento, Instalar app e Sair.
-const menuLinks = navItems.filter((l) => l.to === '/orcamento')
+// os itens que não cabem lá: Orçamento, Notas e comprovantes, Instalar app e Sair.
+const menuLinks = navItems.filter((l) => l.to === '/orcamento' || l.to === '/documentos')
 
 export default function SideMenu({ open, onClose }) {
   const { profile, signOut } = useAuth()

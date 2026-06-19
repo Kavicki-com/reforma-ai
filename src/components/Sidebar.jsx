@@ -41,7 +41,7 @@ export default function Sidebar() {
             end={l.end}
             className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
           >
-            <Icon name={l.icon} size={22} /> {l.label}
+            <Icon name={l.icon} size={20} /> {l.label}
           </NavLink>
         ))}
         <NavLink
@@ -49,14 +49,14 @@ export default function Sidebar() {
           id="sidebar-assinatura"
           className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
         >
-          <Icon name="credit_card" size={22} /> Assinatura
+          <Icon name="credit_card" size={20} /> Assinatura
         </NavLink>
         <NavLink
           to="/configuracoes"
           id="sidebar-configuracoes"
           className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
         >
-          <Icon name="settings" size={22} /> Configurações
+          <Icon name="settings" size={20} /> Configurações
         </NavLink>
       </nav>
 
