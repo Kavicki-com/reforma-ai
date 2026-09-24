@@ -1,12 +1,21 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
+import { structuredData } from './src/lib/landingContent.js'
+
+const jsonLd = {
+  name: 'krovo-json-ld',
+  transformIndexHtml: () => [
+    { tag: 'script', attrs: { type: 'application/ld+json' }, children: JSON.stringify(structuredData()), injectTo: 'head' },
+  ],
+}
 
 // base: './' => caminhos relativos para funcionar em subdomínio servido via SFTP
 export default defineConfig({
   base: './',
   plugins: [
     react(),
+    jsonLd,
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.png', 'pwa-192.png', 'pwa-512.png', 'pwa-maskable.png', 'apple-touch-icon.png'],

@@ -142,6 +142,14 @@
 }
 /* Tablet/mobile: hero centralizado (vira 2 colunas alinhadas à esquerda no desktop) */
 .heroText { text-align: center; }
+.heroKicker {
+  font-size: .8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--mint);
+  margin-bottom: var(--sp-3);
+}
 .heroTitle {
   font-size: clamp(2.6rem, 7vw, 4.4rem);
   font-weight: 700;
@@ -185,6 +193,7 @@
 .heroText > *:nth-child(2) { animation-delay: .1s; }
 .heroText > *:nth-child(3) { animation-delay: .2s; }
 .heroText > *:nth-child(4) { animation-delay: .3s; }
+.heroText > *:nth-child(5) { animation-delay: .4s; }
 
 @media (min-width: 960px) {
   .heroInner { grid-template-columns: 1.05fr .95fr; }

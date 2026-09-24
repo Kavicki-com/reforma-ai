@@ -5,6 +5,7 @@ import { money } from '../lib/format'
 import Icon from '../components/Icon'
 import Accordion from '../components/Accordion'
 import CompanyFooter from '../components/CompanyFooter'
+import { FALLBACK_PLANS, FAQ } from '../lib/landingContent'
 import styles from './Landing.module.css'
 
 const logo = `${import.meta.env.BASE_URL}pwa-192.png`
@@ -12,12 +13,6 @@ const heroPhoto = `${import.meta.env.BASE_URL}hero-architect-update.png`
 
 // Link de cadastro (Login abre direto no modo signup).
 const SIGNUP = '/login?cadastro=1'
-
-// Fallback caso a busca de planos falhe — mantém a seção de preços sempre visível.
-const FALLBACK_PLANS = [
-  { code: 'mensal', name: 'Plano Mensal', billing_period: 'monthly', amount: 19.9, trial_days: 7, max_active_projects: 5 },
-  { code: 'anual', name: 'Plano Anual', billing_period: 'yearly', amount: 199, trial_days: 7, max_active_projects: 10 },
-]
 
 const FEATURES = [
   { icon: 'receipt_long', title: 'Lançamentos de gastos', text: 'Registre cada despesa da obra em segundos e veja o total por categoria, etapa e fornecedor.' },
@@ -40,14 +35,6 @@ const PROOFS = [
   { icon: 'history', title: 'Histórico completo', text: 'Notas, fotos e lançamentos guardados por etapa. A memória da obra inteira, pra sempre.' },
 ]
 
-const FAQ = [
-  { q: 'Preciso de cartão pra testar?', a: 'Não. Você cria a conta, usa tudo por 7 dias e só cadastra o pagamento se quiser continuar.' },
-  { q: 'Como funciona o período grátis?', a: 'São 7 dias com acesso a todas as funções — lançamentos, etapas, materiais, fotos, leitura de nota por IA e resumo público. Sem limite de uso durante o teste.' },
-  { q: 'Posso cancelar quando quiser?', a: 'Sim. A assinatura pode ser cancelada a qualquer momento, direto no app, sem multa e sem ligação pra "reter" você.' },
-  { q: 'Funciona no celular?', a: 'Funciona — e muito bem. O Krovo é um app web que você instala na tela inicial do celular (Android e iPhone) e usa como um app normal, inclusive no canteiro de obras.' },
-  { q: 'Quantas obras posso gerenciar?', a: 'No plano mensal, até 5 obras ativas ao mesmo tempo. No anual, até 10. Obras concluídas não contam no limite.' },
-  { q: 'Como funciona a leitura de nota por IA?', a: 'Você fotografa a nota fiscal ou o cupom e a IA identifica os itens, valores e o total, criando o lançamento pra você revisar e salvar.' },
-]
 
 const MARQUEE = ['sua obra no controle', 'cada real no lugar', 'sem surpresa no fim do mês', 'da demolição ao acabamento', 'a nota vira lançamento']
 
@@ -122,6 +109,7 @@ export default function Landing() {
       <section className={styles.hero}>
         <div className={styles.heroInner}>
           <div className={styles.heroText}>
+            <p className={styles.heroKicker}>App de gestão de obras e reformas</p>
             <h1 className={styles.heroTitle}>
               Sua obra no <em>controle</em>.
             </h1>
@@ -317,7 +305,7 @@ export default function Landing() {
         <div className={styles.faq}>
           {FAQ.map((f, i) => (
             <div key={f.q} className={styles.reveal} style={{ '--d': `${i * 60}ms` }}>
-              <Accordion title={f.q} defaultOpen={i === 0}>
+              <Accordion title={f.q} defaultOpen={i === 0} keepMounted>
                 <p className={styles.faqAnswer}>{f.a}</p>
               </Accordion>
             </div>

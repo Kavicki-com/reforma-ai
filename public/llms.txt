@@ -1,0 +1,28 @@
+# Krovo
+
+> Krovo é um app de gestão de obras e reformas, feito no Brasil. Controla gastos, etapas, lista de materiais e fotos da obra num só lugar, lança despesas a partir da foto da nota fiscal (leitura por IA) e gera um link público com o resumo da obra.
+
+## Produto
+
+- Lançamentos de gastos: cada despesa da obra, com total por categoria, etapa e fornecedor.
+- Etapas e cronograma: andamento de cada etapa, da demolição ao acabamento.
+- Lista de materiais: lista de compras com o que já chegou marcado.
+- Nota fiscal por foto (IA): fotografe a nota ou o cupom e a IA identifica itens, valores e total.
+- Fotos e relatório: antes e depois de cada etapa e histórico completo da obra.
+- Resumo para compartilhar: link público com o resumo da obra para cliente, família ou sócio.
+- Funciona no navegador e pode ser instalado na tela inicial do celular (Android e iPhone).
+
+## Planos
+
+- Plano Mensal: R$ 19,90/mês, até 5 obras ativas.
+- Plano Anual: R$ 199/ano (≈ R$ 16,58/mês), até 10 obras ativas.
+- Todos começam com 7 dias grátis, sem cartão de crédito. Cancelamento a qualquer momento, sem multa. Pagamento por cartão ou PIX.
+
+## Para quem
+
+Pessoas reformando a própria casa ou apartamento, arquitetos, engenheiros, mestres de obra e empreiteiros que precisam prestar contas ao cliente.
+
+## Links
+
+- Site: https://krovo.kavicki.com/
+- Empresa: https://kavicki.com
